@@ -1,0 +1,11 @@
+2011-04-30
+Paul Lowndes
+
+This is the old landing page for Honolulu Hackerspace, done using the Yii Framework.
+
+The code was not done cleanly, nor was it intended for public consumption, so go through the config file carefully.
+
+You will need PHP 5 and MySQL (since the dump file provided is MySQL) but it is possible to convert it to PG or another.
+
+Run the install script, set up the DB, set the config file(s) as specified, point your web root to the web folder, and that should be it!
+
