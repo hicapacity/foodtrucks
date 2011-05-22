@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form wide">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'contact-us-form',
@@ -29,7 +29,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'message'); ?>
-		<?php echo $form->textArea($model,'message',array('size'=>60,'maxlength'=>4096)); ?>
+		<?php echo $form->textArea($model,'message',array('maxlength'=>4096,'rows'=>12, 'cols'=>60)); ?>
 		<?php echo $form->error($model,'message'); ?>
 	</div>
 
