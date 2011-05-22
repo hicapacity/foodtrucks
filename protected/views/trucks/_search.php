@@ -21,6 +21,16 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'menu'); ?>
+		<?php echo $form->textField($model,'menu',array('size'=>60,'maxlength'=>32768)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'photo'); ?>
+		<?php echo $form->textField($model,'photo',array('size'=>60,'maxlength'=>128)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'created'); ?>
 		<?php echo $form->textField($model,'created'); ?>
 	</div>

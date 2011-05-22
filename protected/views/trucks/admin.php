@@ -45,8 +45,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'twitter_id',
 		'twitter_username',
+		'menu',
+		'photo',
 		'created',
+		/*
 		'modified',
+		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

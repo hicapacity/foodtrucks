@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form wide">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'trucks-form',
@@ -19,6 +19,18 @@
 		<?php echo $form->labelEx($model,'twitter_username'); ?>
 		<?php echo $form->textField($model,'twitter_username',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'twitter_username'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'menu'); ?>
+		<?php echo $form->textField($model,'menu',array('size'=>60,'maxlength'=>32768)); ?>
+		<?php echo $form->error($model,'menu'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'photo'); ?>
+		<?php echo $form->textField($model,'photo',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'photo'); ?>
 	</div>
 
 	<div class="row">

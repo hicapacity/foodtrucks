@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 $settingsMain = array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Organization Name of City, State',
+	'name'=>'Streetgrindz App!',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -85,18 +85,10 @@ $settingsMain = array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'admin@mydomain.com',
-		'contactEmail'=>'contact@mydomain.com',
-		'twitter'=>array(
-			'consumerKey'=>'oTAiNpbW0mYHrL3PscA',
-			'consumerSecret'=>'qHLtP0F0z4hRfcgMM7JgGyr4lbiH3j9WJH9GwIXgAA',
-			'oauthAccessToken'=>'302857632-Hd7yGOZ2kA8qCFvlWm6liSGl3H0Ibh4BZ0Ez0auO',
-			'oauthAccessTokenSecret'=>'tRUtieBnPqZ3SaZsHxIzxv0FQTSoleyZtFkAm6kJ7O0',
-		),
-	),
+        'params' => require( dirname( __FILE__ ) . '/params.php' ),
 );
+
+
 
 if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myurl.com') {
     $settingsMain['components']['log']['routes'][] =
@@ -119,8 +111,16 @@ if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myur
             array(
                 '192.168.1.100',
                 '192.168.1.101',  /// SET IP's for dev machine here
+                '192.168.1.102',
+                '192.168.1.103',
+                '192.168.1.104',
+                '192.168.1.105',
+                '192.168.1.106',
+                '192.168.1.107',
+                '192.168.1.108',
+                '192.168.1.109',
                 '192.168.1.110',
-		'192.168.1.111',
+                '192.168.1.111',
 
             )
         );

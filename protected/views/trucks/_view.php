@@ -12,6 +12,14 @@
 	<?php echo CHtml::encode($data->twitter_username); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('menu')); ?>:</b>
+	<?php echo CHtml::encode($data->menu); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('photo')); ?>:</b>
+	<?php echo CHtml::encode($data->photo); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
 	<?php echo CHtml::encode($data->created); ?>
 	<br />

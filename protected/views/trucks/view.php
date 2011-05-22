@@ -21,6 +21,8 @@ $this->menu=array(
 		'id',
 		'twitter_id',
 		'twitter_username',
+		'menu',
+		'photo',
 		'created',
 		'modified',
 	),

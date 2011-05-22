@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.37, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
 --
 -- Host: localhost    Database: streetgrindzapp
 -- ------------------------------------------------------
--- Server version	5.1.37-1ubuntu5.5-log
+-- Server version	5.1.41-3ubuntu12.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -80,6 +80,8 @@ CREATE TABLE `trucks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `twitter_id` varchar(256) NOT NULL,
   `twitter_username` varchar(64) NOT NULL,
+  `menu` varchar(32768) NOT NULL,
+  `photo` varchar(128) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -93,7 +95,7 @@ CREATE TABLE `trucks` (
 
 LOCK TABLES `trucks` WRITE;
 /*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
-INSERT INTO `trucks` VALUES (1,'31953','ryankanno','2011-05-21 12:00:00','2011-05-21 12:00:00');
+INSERT INTO `trucks` VALUES (1,'31953','ryankanno','<p><u><strong>HELLO!</strong></u></p>',' test','2011-05-21 12:00:00','2011-05-21 22:16:20');
 /*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-21 14:19:18
+-- Dump completed on 2011-05-21 22:20:35

@@ -40,15 +40,26 @@ class Trucks extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('twitter_id, twitter_username, created, modified', 'required'),
+			array('twitter_id, twitter_username, created, modified, menu, photo', 'required'),
 			array('twitter_id', 'length', 'max'=>256),
 			array('twitter_username', 'length', 'max'=>64),
+			array('menu', 'length', 'max'=>32768),
+			array('photo', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, twitter_id, twitter_username, created, modified', 'safe', 'on'=>'search'),
+			array('id, twitter_id, twitter_username, menu, photo, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
+	public function beforeSave() {
+		if ($this->isNewRecord)
+			$this->created = date('Y-m-d H:i:s');
+		else
+			$this->modified = date('Y-m-d H:i:s');
+	 
+		return parent::beforeSave();
+	}
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -70,6 +81,8 @@ class Trucks extends CActiveRecord
 			'id' => 'ID',
 			'twitter_id' => 'Twitter',
 			'twitter_username' => 'Twitter Username',
+			'menu' => 'Menu',
+			'photo'=> 'Photo',
 			'created' => 'Created',
 			'modified' => 'Modified',
 		);
@@ -89,6 +102,8 @@ class Trucks extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('twitter_id',$this->twitter_id,true);
 		$criteria->compare('twitter_username',$this->twitter_username,true);
+		$criteria->compare('menu',$this->menu,true);
+		$criteria->compare('photo',$this->photo,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('modified',$this->modified,true);
 

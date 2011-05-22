@@ -23,7 +23,7 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo"><a class="linkTitle" href="<?php echo Yii::app()->request->baseUrl;?>/"><?php echo CHtml::encode(Yii::app()->name); ?></a></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -31,8 +31,8 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Meet-1', 'url'=>array('/site/page', 'view'=>'meet-and-greet-1')),
-				array('label'=>'Meet-2', 'url'=>array('/meet20110224')),
+				array('label'=>'Trucks', 'url'=>array('/trucks/admin')),
+				array('label'=>'Tweets', 'url'=>array('/tweets/admin')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
@@ -47,9 +47,9 @@
 	<?php echo $content; ?>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by [Use Yii::app()->params['myParam']; ].<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->params['siteName']); ?>.<br/>
 		All Rights Reserved.<br/>
-		Powered by: <a href="http://localhost/">me.com</a>
+		Powered by: <a href="<?php echo CHtml::encode(Yii::app()->params['poweredByUrl']); ?>"><?php echo CHtml::encode(Yii::app()->params['poweredBy']); ?></a>
 	</div><!-- footer -->
 
 </div><!-- page -->

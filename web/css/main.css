@@ -5,7 +5,7 @@ body
     background-image:url('/images/bk.jpg');
     background-repeat:repeat-x;
     color: #000;
-    background-color: #d8dad9;
+    background-color: #193949;
     font: normal 10pt 'Trebuchet MS', sans-serif;
 }
 
@@ -25,8 +25,8 @@ body
 {
     margin: 1px;
 	padding: 10px;
-	border-top: 3px solid #cad1ff;
-    background-color: #465161;
+	border-top: 3px solid #aaa;
+    background-color: #245;
 	color: #fff;
     text-align: left;
 }
@@ -262,5 +262,8 @@ div.search-form
 	border:1px dotted #333;
 }
 
-
+a.linkTitle {
+	text-decoration:none;
+	color:white;
+}
 
