@@ -1,0 +1,3 @@
+[submodule "protected/vendors/twitteroauth"]
+	path = protected/vendors/twitteroauth
+	url = https://github.com/abraham/twitteroauth.git
