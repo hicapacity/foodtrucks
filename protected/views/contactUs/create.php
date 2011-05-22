@@ -10,6 +10,6 @@ $this->breadcrumbs=array(
 //);
 ?>
 
-<h1>Contact HackerSpace</h1>
+<h1>Contact <?php echo CHtml::encode(Yii::app()->params['siteName']); ?></h1>
 
 <?php echo $this->renderPartial('/contactUs/_form', array('model'=>$model)); ?>

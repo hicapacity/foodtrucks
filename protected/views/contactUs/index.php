@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Contact Uses</h1>
+<h1>Contact Us</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
