@@ -23,3 +23,5 @@ You will need PHP 5 and MySQL (since the dump file provided is MySQL) but it is 
 
 Run the install script, set up the DB, set the config file(s) as specified, point your web root to the web folder, and that should be it!
 
+2011-05-24
+github talk!
