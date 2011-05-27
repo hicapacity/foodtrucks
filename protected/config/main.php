@@ -16,7 +16,7 @@ $settingsMain = array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-        'ext.yii-mail.YiiMailMessage',         
+		'ext.yii-mail.YiiMailMessage',	   
 	),
 
 	'modules'=>array(
@@ -33,13 +33,13 @@ $settingsMain = array(
 		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-            'appendParams' => true,
-            'showScriptName' => false,            
-			//'rules'=>array(
-			//	'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-			//	'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-			//	'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-			//),
+			'appendParams' => true,
+			'showScriptName' => false,		
+			#'rules'=>array(
+			#	'<controller:\w+>/<id:\d+>'=>'<controller>/view',
+			#	'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+			#	'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+			#),
 		),
 		
 		'db'=>array(
@@ -57,8 +57,8 @@ $settingsMain = array(
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
+			'errorAction'=>'site/error',
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -80,49 +80,49 @@ $settingsMain = array(
  			'viewPath' => 'application.views',
  			'logging' => true,
  			'dryRun' => false
- 		),         
+ 		),	   
 	),
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-        'params' => require( dirname( __FILE__ ) . '/params.php' ),
+	'params' => require( dirname( __FILE__ ) . '/params.php' ),
 );
 
 
 
 if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myurl.com') {
     $settingsMain['components']['log']['routes'][] =
-        array(
-            'class' => 'CEmailLogRoute',
-            'levels' => 'error, warning',
-            'emails' => 'error@mydomain.com',
-        );
+	  array(
+		'class' => 'CEmailLogRoute',
+		'levels' => 'error, warning',
+		'emails' => 'error@mydomain.com',
+	  );
 } else {
     $settingsMain['components']['log']['routes'][] =
-        array(
-            'class' => 'CWebLogRoute',
-            'levels' => 'error, warning',
-        );
+	  array(
+		'class' => 'CWebLogRoute',
+		'levels' => 'error, warning',
+	  );
     $settingsMain['modules']['gii'] =
-        array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'admin',
-            'ipFilters' =>
-            array(
-                '192.168.1.100',
-                '192.168.1.101',  /// SET IP's for dev machine here
-                '192.168.1.102',
-                '192.168.1.103',
-                '192.168.1.104',
-                '192.168.1.105',
-                '192.168.1.106',
-                '192.168.1.107',
-                '192.168.1.108',
-                '192.168.1.109',
-                '192.168.1.110',
-                '192.168.1.111',
+	  array(
+		'class' => 'system.gii.GiiModule',
+		'password' => 'admin',
+		'ipFilters' =>
+		array(
+		    '192.168.1.100',
+		    '192.168.1.101',  /// SET IP's for dev machine here
+		    '192.168.1.102',
+		    '192.168.1.103',
+		    '192.168.1.104',
+		    '192.168.1.105',
+		    '192.168.1.106',
+		    '192.168.1.107',
+		    '192.168.1.108',
+		    '192.168.1.109',
+		    '192.168.1.110',
+		    '192.168.1.111',
 
-            )
-        );
+		)
+	  );
 }
 return $settingsMain;
