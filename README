@@ -1,3 +1,20 @@
+MYSQL SETUP
+===========
+
+Create your dev mysql using the following:
+
+  mysql> create database streetgrindzapp;
+  mysql> grant all on streetgrindzapp.* to streetgrindzuser@localhost identified by 'dev';
+  mysql> exit
+
+Grab the recent dump:
+
+  mysql -ustreetgrindzuser -pdev streetgrindzapp < sql/streetgrindzapp.sql
+
+
+
+#############################
+
 2011-05-21 (Rapture Day)
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
