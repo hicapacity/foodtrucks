@@ -29,8 +29,9 @@
 		<div id="mainmenu">
 			<a href="#" id="menutoggle"><span>&laquo;</span>Menu</a>
 			<ul>
-				<li><a href="#">Find Nearest</a></li>
-				<li><a href="#">Help</a></li>
+				<li><a href="#find_all">Show All</a></li>
+				<li><a href="#find_nearest">Find Nearest</a></li>
+				<li><a href="#help">Help</a></li>
 			</ul>
 		</div><!-- mainmenu -->
 	</div><!-- header -->
