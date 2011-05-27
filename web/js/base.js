@@ -97,13 +97,14 @@ foodtruckapp.method('do_action', function(action){
 foodtruckapp.method('mark_trucks', function(trucks){
 	this.truck_markers = []; // TODO: destroy icons properly (do we even need to)?
 	var that = this;
+	var img = "/images/truck.png";
 	$(trucks).each(function(i, v){
 		var t_latlng = new google.maps.LatLng(v.lat, v.lng);
 		var truck = new google.maps.Marker({
 			position: t_latlng,
-			map: that.gmap
+			map: that.gmap,
+			icon: img
 		});
-		console.log(truck);
 		that.truck_markers.push(truck);
 	});
 });
