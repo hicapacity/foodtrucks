@@ -14,7 +14,7 @@ Create your dev mysql using the following:
 Grab the recent dump:
 
 ```mysql
-  mysql -ustreetgrindzuser -pdev streetgrindzapp < sql/streetgrindzapp.sql
+  mysql -u streetgrindzuser -pdev streetgrindzapp < sql/streetgrindzapp.sql
 ```
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
