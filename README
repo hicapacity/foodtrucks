@@ -1,6 +1,8 @@
 MYSQL SETUP
 ===========
 
+Note: mysql is not required to run the app yet
+
 Create your dev mysql using the following:
 
   mysql> create database streetgrindzapp;
@@ -12,14 +14,9 @@ Grab the recent dump:
   mysql -ustreetgrindzuser -pdev streetgrindzapp < sql/streetgrindzapp.sql
 
 
-
-#############################
-
-2011-05-21 (Rapture Day)
-
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
 
-My apache vhost config as it relates to this looks like this:
+Example apache vhost config:
 
     <Directory /var/www/mysite.location/public_html>
         Options +FollowSymLinks
@@ -35,16 +32,6 @@ My apache vhost config as it relates to this looks like this:
         Allow from all
     </Directory>
 
-2011-04-30
-Paul Lowndes
-
-This is the old landing page for Honolulu Hackerspace, done using the Yii Framework.
-
-The code was not done cleanly, nor was it intended for public consumption, so go through the config file carefully.
-
 You will need PHP 5 and MySQL (since the dump file provided is MySQL) but it is possible to convert it to PG or another.
 
 Run the install script, set up the DB, set the config file(s) as specified, point your web root to the web folder, and that should be it!
-
-2011-05-24
-github talk!
