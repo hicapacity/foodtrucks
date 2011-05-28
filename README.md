@@ -51,3 +51,8 @@ have to edit your php.ini file and uncomment ``date.timezone``
 and set it to the following: 
 
 ``date.timezone = 'Pacific/Honolulu'``
+
+Block Diagram
+=============
+
+![Block diagram of system](https://docs.google.com/drawings/pub?id=17EyP7j0F2t8dCOWSTPzzhh-TYtaI4mLNcs3pEZvhQvk&w=480&h=360)
