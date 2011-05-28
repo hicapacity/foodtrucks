@@ -25,7 +25,7 @@ Apache Setup
 Example apache vhost config (please edit Directory as needed):
 
 ```apache
-    <Directory /var/www/site_location/web>
+    <Directory /var/www/foodtrucks/web>
         IndexIgnore */*
         RewriteEngine on
         RewriteCond %{REQUEST_FILENAME} !-f
@@ -39,6 +39,15 @@ Example apache vhost config (please edit Directory as needed):
     </Directory>
 ```
 
-You will need PHP 5 and MySQL (since the dump file provided is MySQL) but it is possible to convert it to PG or another.
+You will need PHP 5 and MySQL (since the dump file provided is MySQL). 
 
 Run the install script, set up the DB, set the config file(s) as specified, point your web root to the web folder, and that should be it!
+
+PHP 5 Setup
+===========
+
+If you encounter an error about date() when first accessing the site, you'll 
+have to edit your php.ini file and uncomment ``date.timezone``
+and set it to the following: 
+
+``date.timezone = 'Pacific/Honolulu'``
