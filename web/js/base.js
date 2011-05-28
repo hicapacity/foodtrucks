@@ -11,20 +11,21 @@ foodtruckapp.method('init', function(){
 	var that = this;
 
 	this.defaultLatLng = new google.maps.LatLng(21.466, -157.9833);
-	/* Initialize Menu */
-	this.$menu = $("#mainmenu ul");
-	this.$menutoggle = $("#mainmenu #menutoggle");
-	this.$menutoggle.click(function(e){
-		console.log("Menu Clicked");
-		that.$menu.slideToggle();
-		return false;
-	});
 
+	this.truck_markers = [];
+
+	/* Initialize Menu */
+	this.menu = new foodtruckapp.menu_interface($("#mainmenu"), this);
+
+	this.gmap = null;
 	/* Initialize Google Maps */
 	var $map_canvas = $("#map_canvas");
 	if ($map_canvas){
 		this.init_map($map_canvas[0]);
 	}
+
+	/* Initialize Api Interface */
+	this.api_interface = new foodtruckapp.api_interface(this);
 });
 
 foodtruckapp.method('init_map', function(canvas){
@@ -74,6 +75,75 @@ foodtruckapp.method('init_map', function(canvas){
 			map: this.gmap
 		});
 	}
+});
+
+foodtruckapp.method('do_action', function(action){
+	switch (action){
+		case "find_all":
+			var cb = function(data, app){
+				app.mark_trucks(data);
+			};
+			this.api_interface.fetch('find_all', {}, cb);
+			break;
+		case "find_nearest":
+			console.log("Not implemented yet");
+			break;
+		default:
+			console.log("Not implemented yet");
+			break;
+	};
+});
+
+foodtruckapp.method('mark_trucks', function(trucks){
+	this.truck_markers = []; // TODO: destroy icons properly (do we even need to)?
+	var that = this;
+	var img = "/images/truck.png";
+	$(trucks).each(function(i, v){
+		var t_latlng = new google.maps.LatLng(v.lat, v.lng);
+		var truck = new google.maps.Marker({
+			position: t_latlng,
+			map: that.gmap,
+			icon: img
+		});
+		that.truck_markers.push(truck);
+	});
+});
+
+foodtruckapp.menu_interface = function($mainmenu, app){
+	var that = this;
+	this.app = app;
+	this.$menu = $("ul", $mainmenu);
+	this.$toggle = $("#menutoggle", $mainmenu);
+	this.$toggle.click(function(e){
+		console.log("Menu Clicked");
+		that.$menu.slideToggle();
+		return false;
+	});
+	$("a", this.$menu).click(function(e){
+		var $link = $(e.target);
+		var action = $link.attr('href').split("#")[1];
+		that.app.do_action(action);
+		return false;
+	});
+};
+
+foodtruckapp.api_interface = function(app){
+	this.app = app;
+	this.gateway = ''; //or 'http://domain/';
+	this.endpoints = {'find_all':'/api/allfoodtrucks/', 'find_nearest':'/api/notrucks'};
+};
+
+foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
+	var url = this.gateway + this.endpoints[endpoint];
+	console.log("Requesting: " + url);
+	var that = this;
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(data, textStatus, jqXHR){
+			cb(data, that.app);
+		}
+	});
 });
 
 $(document).ready(function(){

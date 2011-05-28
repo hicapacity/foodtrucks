@@ -37,8 +37,11 @@ class ApiController extends Controller
 		$this->layout = false;
 		header('Content-type: application/json');
 		$trucks = Array();
+		$lat = 21.466;
+		$lng = -157.9833;
+		$delta = 100;
 		for($i=0;$i<10;$i++){
-			$ntruck = Array("id"=>$i, "lat"=>rand(10, 30), "lng"=>rand(-167, -147));
+			$ntruck = Array("id"=>$i, "lat"=>rand(-$delta, $delta)/1000+$lat, "lng"=>rand(-$delta, $delta)/1000+$lng);
 			$trucks[] = $ntruck;
 		}
 		echo json_encode($trucks);
