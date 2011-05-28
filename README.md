@@ -52,6 +52,19 @@ and set it to the following:
 
 ``date.timezone = 'Pacific/Honolulu'``
 
+Application Setup
+=================
+
+Since we have a dependency to a submodule, please run:
+
+``git submodule init``
+
+and:
+
+``git submodule update``
+
+from the root of the project
+
 Block Diagram
 =============
 
