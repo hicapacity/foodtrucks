@@ -1,22 +1,11 @@
-MYSQL SETUP
-===========
+2011-05-24
+github talk!
 
-Note: mysql is not required to run the app yet
-
-Create your dev mysql using the following:
-
-  mysql> create database streetgrindzapp;
-  mysql> grant all on streetgrindzapp.* to streetgrindzuser@localhost identified by 'dev';
-  mysql> exit
-
-Grab the recent dump:
-
-  mysql -ustreetgrindzuser -pdev streetgrindzapp < sql/streetgrindzapp.sql
-
+2011-05-21 (Rapture Day)
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
 
-Example apache vhost config:
+My apache vhost config as it relates to this looks like this:
 
         IndexIgnore */*
         RewriteEngine on
@@ -24,6 +13,14 @@ Example apache vhost config:
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteRule . index.php
 
+
+
+2011-04-30
+Paul Lowndes
+
+This is the old landing page for Honolulu Hackerspace, done using the Yii Framework.
+
+The code was not done cleanly, nor was it intended for public consumption, so go through the config file carefully.
 
 You will need PHP 5 and MySQL (since the dump file provided is MySQL) but it is possible to convert it to PG or another.
 
