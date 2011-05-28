@@ -19,6 +19,9 @@ Grab the recent dump:
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
 
+Apache Setup
+===========
+
 Example apache vhost config (please edit Directory as needed):
 
 ```apache
