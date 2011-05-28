@@ -21,13 +21,19 @@ I forgot to add the rewrites to remove index, I do it in the Apache vhost config
 
 My apache vhost config as it relates to this looks like this:
 
+    <Directory /var/www/mysite.location/public_html>
+        Options +FollowSymLinks
         IndexIgnore */*
         RewriteEngine on
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteRule . index.php
 
-
+        Options FollowSymLinks
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
 
 2011-04-30
 Paul Lowndes
