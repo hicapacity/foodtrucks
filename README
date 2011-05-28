@@ -19,17 +19,16 @@ Grab the recent dump:
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
 
-My apache vhost config as it relates to this looks like this:
+My apache vhost config as it relates to this looks like this (please edit Directory as needed):
 
-    <Directory /var/www/mysite.location/public_html>
-        Options +FollowSymLinks
+    <Directory /var/www/site_location/web>
         IndexIgnore */*
         RewriteEngine on
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteRule . index.php
 
-        Options FollowSymLinks
+        Options +FollowSymLinks
         AllowOverride All
         Order allow,deny
         Allow from all
