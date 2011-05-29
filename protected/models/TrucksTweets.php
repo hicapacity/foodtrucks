@@ -15,7 +15,7 @@
  * The followings are the available model relations:
  * @property Trucks $truck
  */
-class TrucksTweets extends CActiveRecord
+class TrucksTweets extends CreatedModifiedActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -42,13 +42,14 @@ class TrucksTweets extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('truck_id, tweet, geo_lat, geo_long, created, modified', 'required'),
-			array('truck_id', 'numerical', 'integerOnly'=>true),
+			array('truck_id, tweet_id, tweet, geo_lat, geo_long, created, modified', 'required'),
+			array('truck_id, tweet_id', 'numerical', 'integerOnly'=>true),
 			array('geo_lat, geo_long', 'numerical'),
 			array('tweet', 'length', 'max'=>160),
+			array('photo_url', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, truck_id, tweet, geo_lat, geo_long, created, modified', 'safe', 'on'=>'search'),
+			array('id, truck_id, tweet_id, tweet, photo_url, geo_lat, geo_long, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +73,9 @@ class TrucksTweets extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'truck_id' => 'Truck',
+			'tweet_id' => 'Tweet Id',
 			'tweet' => 'Tweet',
+			'photo_url' => 'Photo URL',
 			'geo_lat' => 'Geo Lat',
 			'geo_long' => 'Geo Long',
 			'created' => 'Created',
@@ -93,7 +96,9 @@ class TrucksTweets extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('truck_id',$this->truck_id);
+		$criteria->compare('tweet_id',$this->tweet_id,true);
 		$criteria->compare('tweet',$this->tweet,true);
+		$criteria->compare('photo_url',$this->photo_url,true);
 		$criteria->compare('geo_lat',$this->geo_lat);
 		$criteria->compare('geo_long',$this->geo_long);
 		$criteria->compare('created',$this->created,true);

@@ -8,11 +8,16 @@ return array(
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+			'connectionString' => 'mysql:host=localhost;dbname=streetgrindzapp',  //set db name
+			'emulatePrepare' => true,
+			'username' => 'streetgrindzuser',  //set username
+			'password' => 'dev',  //set password
+			'charset' => 'utf8',
+        ),
 	),
 
 	'import'=>array(
+		'application.models.*',
 		'application.components.*',
     ),
 

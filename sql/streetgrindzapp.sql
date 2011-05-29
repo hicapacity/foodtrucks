@@ -24,26 +24,15 @@ DROP TABLE IF EXISTS `trucks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trucks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `twitter_id` varchar(256) NOT NULL,
-  `twitter_username` varchar(64) NOT NULL,
-  `menu` varchar(32768) NOT NULL,
-  `photo` varchar(128) NOT NULL,
+  `twitter_id` bigint unsigned NOT NULL,
+  `twitter_username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `icon_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `twitter_id` (`twitter_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `trucks`
---
-
-LOCK TABLES `trucks` WRITE;
-/*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
-INSERT INTO `trucks` VALUES (1,'31953','ryankanno','<p><u><strong>HELLO!</strong></u></p>',' test','2011-05-21 12:00:00','2011-05-21 22:16:20');
-/*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `trucks_tweets`
@@ -55,27 +44,20 @@ DROP TABLE IF EXISTS `trucks_tweets`;
 CREATE TABLE `trucks_tweets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `truck_id` int(11) NOT NULL,
+  `tweet_id` bigint unsigned NOT NULL,
   `tweet` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `photo_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `geo_lat` float NOT NULL,
   `geo_long` float NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `tweet_id` (`tweet_id`),
   KEY `truck_id_created` (`truck_id`,`created`),
   KEY `truck_id` (`truck_id`),
   CONSTRAINT `trucks_tweets_ibfk_1` FOREIGN KEY (`truck_id`) REFERENCES `trucks` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `trucks_tweets`
---
-
-LOCK TABLES `trucks_tweets` WRITE;
-/*!40000 ALTER TABLE `trucks_tweets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `trucks_tweets` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
