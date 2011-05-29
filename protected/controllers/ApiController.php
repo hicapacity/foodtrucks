@@ -41,7 +41,13 @@ class ApiController extends Controller
 		$lng = -157.9833;
 		$delta = 100;
 		for($i=0;$i<10;$i++){
-			$ntruck = Array("id"=>$i, "lat"=>rand(-$delta, $delta)/1000+$lat, "lng"=>rand(-$delta, $delta)/1000+$lng);
+			$ntruck = Array(
+				"id"=>$i,
+				"lat"=>rand(-$delta, $delta)/1000+$lat,
+				"lng"=>rand(-$delta, $delta)/1000+$lng,
+				"name"=>"FoodTruck{$i}",
+				"info"=>"<h2>Blah Blah{$i}</h2><p>More blah blah blah</p>",
+			);
 			$trucks[] = $ntruck;
 		}
 		echo json_encode($trucks);
