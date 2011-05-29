@@ -168,7 +168,9 @@ foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
 		url: url,
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR){
-			cb(data, that.app);
+			if (data.status != 'fail'){
+				cb(data.data, that.app);
+			}	
 		}
 	});
 });

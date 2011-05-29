@@ -51,7 +51,7 @@ class ApiController extends Controller
 			);
 			$trucks[] = $ntruck;
 		}
-		echo json_encode($trucks);
+		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
 		Yii::app()->end();
 	}
 	public function actionTruck_By_Id($id){
@@ -70,7 +70,7 @@ class ApiController extends Controller
 			"info"=>"<h2>Blah Blah{$id}</h2><p>More blah blah blah</p>",
 		);
 		$trucks[] = $ntruck;
-		echo json_encode($trucks);
+		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
 		Yii::app()->end();
 	}
 
