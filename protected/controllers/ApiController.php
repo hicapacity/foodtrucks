@@ -1,5 +1,8 @@
 <?php
-
+/*
+NOTE:
+Routes are done in config.php.  If you need to add more api functions, you need to map them there.
+*/
 class ApiController extends Controller
 {
 	/**
@@ -30,10 +33,8 @@ class ApiController extends Controller
 		Yii::app()->end();
 	}
 
-	public function actionAllFoodTrucks()
+	public function actionAll_Trucks()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
 		$this->layout = false;
 		header('Content-type: application/json');
 		$trucks = Array();
@@ -50,6 +51,25 @@ class ApiController extends Controller
 			);
 			$trucks[] = $ntruck;
 		}
+		echo json_encode($trucks);
+		Yii::app()->end();
+	}
+	public function actionTruck_By_Id($id){
+		$id = (int)$id;
+		$this->layout = false;
+		header('Content-type: application/json');
+		$trucks = Array();
+		$lat = 21.466;
+		$lng = -157.9833;
+		$delta = 100;
+		$ntruck = Array(
+			"id"=>$id,
+			"lat"=>rand(-$delta, $delta)/1000+$lat,
+			"lng"=>rand(-$delta, $delta)/1000+$lng,
+			"name"=>"FoodTruck{$id}",
+			"info"=>"<h2>Blah Blah{$id}</h2><p>More blah blah blah</p>",
+		);
+		$trucks[] = $ntruck;
 		echo json_encode($trucks);
 		Yii::app()->end();
 	}
