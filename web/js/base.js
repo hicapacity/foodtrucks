@@ -1,45 +1,63 @@
+/* Hacking this file:
+ * Everything lives in the foodtruckapp. namespace.
+ * Please don't pollute the global scope.
+ * The only thing bad I do is add to the Function prototype,
+ * but that's recommended by Crockford. So there.
+ */
+
 /* From Javascript the Good Parts */
 Function.prototype.method = function (name, func) {
 	this.prototype[name] = func;
 	return this;
 };
 
+/* This is our main namespace */
 var foodtruckapp = function(){};
 
 foodtruckapp.method('init', function(){
+	/* Initialize the foodtruck client app */
 	console.log("Food Truck App Initialized");
-	var that = this;
+	var that = this; // <3 js closures (joke)
 
-	this.defaultLatLng = new google.maps.LatLng(21.466, -157.9833);
+	// App options
+	this.opts = {};
+	this.opts['default_latlng'] = new google.maps.LatLng(21.466, -157.9833);
+	this.opts['gmap_dom_id'] = "#map_canvas";
+	this.opts['menu_dom_id'] = "#mainmenu";
 
+	// Sub-modules
+	this.menu = null; // Object controlling menu
 	this.gmap = null; // google.map
 	this.truck_markers = []; // list of google.map.Marker for trucks
 	this.user_marker = null; // google.map.Marker for user location
 	this.geo_cb = null; // Callback to fetch user geo location
+	this.info_window = null; // google.map.InfoWindow for truck popup
 
 	/* Initialize Menu */
-	this.menu = new foodtruckapp.menu_interface($("#mainmenu"), this);
+	this.menu = new foodtruckapp.MenuInterface(this.opts['menu_dom_id'], this);
 
 	/* Initialize Google Maps */
-	var $map_canvas = $("#map_canvas");
+	var $map_canvas = $(this.opts['gmap_dom_id']);
 	if ($map_canvas){
 		this.init_map($map_canvas[0]);
 	}
 
+	/* Initialize InfoWindow */
 	this.info_window = new google.maps.InfoWindow({
 		content: "blah",
 		maxWidth: 200
 	});
 
 	/* Initialize Api Interface */
-	this.api_interface = new foodtruckapp.api_interface(this);
+	this.api_interface = new foodtruckapp.ApiInterface(this);
 });
 
 foodtruckapp.method('init_map', function(canvas){
+	/* Initialize google map and store it in this.gmap */
 	console.log("Map Initialized");
 	var myOptions = {
 		zoom: 10,
-		center: this.defaultLatLng,
+		center: this.opts['default_latlng'],
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		disableDefaultUI: true,
 		zoomControl: true,
@@ -50,20 +68,17 @@ foodtruckapp.method('init_map', function(canvas){
 		__: true
 	};
 	this.gmap = new google.maps.Map(canvas, myOptions);
-	this.gmap.setCenter(this.defaultLatLng);
+	this.gmap.setCenter(this.opts['default_latlng']);
 	var that = this;
 
 	var geo_cb;
-	// Try W3C Geolocation (Preferred)
 	if(navigator.geolocation) {
 		console.log("Trying W3C Geolocation");
 		geo_cb = navigator.geolocation;
-	// Try Google Gears Geolocation
 	} else if (google.gears) {
 		console.log("Trying Google Gears Geolocation");
 		var geo = google.gears.factory.create('beta.geolocation');
 		geo_cb = geo;
-	// Browser doesn't support Geolocation
 	} else {
 		console.log("No Geolocation, Sad Panda");
 	}
@@ -136,7 +151,7 @@ foodtruckapp.method('truck_onclick', function(truck){
 	this.info_window.open(this.gmap, truck);
 });
 
-foodtruckapp.menu_interface = function($mainmenu, app){
+foodtruckapp.MenuInterface = function($mainmenu, app){
 	var that = this;
 	this.app = app;
 	this.$menu = $("ul", $mainmenu);
@@ -154,7 +169,7 @@ foodtruckapp.menu_interface = function($mainmenu, app){
 	});
 };
 
-foodtruckapp.api_interface = function(app){
+foodtruckapp.ApiInterface = function(app){
 	this.app = app;
 	this.gateway = ''; //or 'http://domain/';
 	this.endpoints = {
@@ -163,7 +178,7 @@ foodtruckapp.api_interface = function(app){
 	};
 };
 
-foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
+foodtruckapp.ApiInterface.method('fetch', function(endpoint, args, cb){
 	var url = this.gateway + this.endpoints[endpoint];
 	if('id' in args){
 		url += args['id'];
