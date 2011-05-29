@@ -4,7 +4,7 @@ Ubuntu 11.04
 Install apache and php
 
 ```shell
-    $ sudo apt-get install apache2 php5 php5-mysql
+    $ sudo apt-get install apache2 php5 php5-mysql php5-curl
 ```
 
 Enable mod_rewrite
