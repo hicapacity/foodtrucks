@@ -52,6 +52,9 @@ and set it to the following:
 
 ``date.timezone = 'Pacific/Honolulu'``
 
+If you encounter PHP Fatal error:  Call to undefined function curl_init(), you
+need to install libcurl.
+
 Application Setup
 =================
 
@@ -64,6 +67,10 @@ and:
 ``git submodule update``
 
 from the root of the project
+
+To get a sample truck/tweet, please run from root/protected:
+
+``./yiic queryfoodtruck``
 
 Block Diagram
 =============
