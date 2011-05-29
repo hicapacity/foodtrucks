@@ -19,6 +19,8 @@ Grab the recent dump:
 
 I forgot to add the rewrites to remove index, I do it in the Apache vhost config, you might wish to do it in .htaccess.
 
+If you set a different mysql password than dev you need to set the password in config/console.php and config/main.php
+
 Apache Setup
 ===========
 
@@ -38,6 +40,8 @@ Example apache vhost config (please edit Directory as needed):
         Allow from all
     </Directory>
 ```
+
+(If you're using shared hosting a .htaccess file is already setup in web/.htaccess)
 
 You will need PHP 5 and MySQL (since the dump file provided is MySQL). 
 
