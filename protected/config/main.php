@@ -43,11 +43,6 @@ $settingsMain = array(
 		),
 		
 		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		// uncomment the following to use a MySQL database
-		
-		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=streetgrindzapp',  //set db name
 			'emulatePrepare' => true,
 			'username' => 'streetgrindzuser',  //set username
@@ -89,13 +84,13 @@ $settingsMain = array(
 );
 
 
-
+// TODO: Need to have separate configuration files for production/dev
 if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myurl.com') {
     $settingsMain['components']['log']['routes'][] =
 	  array(
 		'class' => 'CEmailLogRoute',
 		'levels' => 'error, warning',
-		'emails' => 'error@mydomain.com',
+		'emails' => 'maker@hicapacity.org',
 	  );
 } else {
     $settingsMain['components']['log']['routes'][] =
@@ -107,22 +102,6 @@ if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myur
 	  array(
 		'class' => 'system.gii.GiiModule',
 		'password' => 'admin',
-		'ipFilters' =>
-		array(
-		    '192.168.1.100',
-		    '192.168.1.101',  /// SET IP's for dev machine here
-		    '192.168.1.102',
-		    '192.168.1.103',
-		    '192.168.1.104',
-		    '192.168.1.105',
-		    '192.168.1.106',
-		    '192.168.1.107',
-		    '192.168.1.108',
-		    '192.168.1.109',
-		    '192.168.1.110',
-		    '192.168.1.111',
-
-		)
 	  );
 }
 return $settingsMain;
