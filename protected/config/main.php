@@ -36,6 +36,7 @@ $settingsMain = array(
 			'showScriptName' => false,		
 			'rules'=>array(
 				'api/trucks'=>'api/all_trucks',
+				'api/raise_exception'=>'api/raise_exception',
 				'api/truck/<id:\d+>'=>'api/truck_by_id',
 			),
 		),

@@ -33,6 +33,14 @@ class ApiController extends Controller
 		Yii::app()->end();
 	}
 
+	public function actionRaise_Exception(){
+		/* Client testing api. This api call always returns an error */
+		$this->layout = false;
+		header('Content-type: application/json');
+		echo json_encode(Array('status'=>'fail', 'data'=>'Your request failed because you wanted it to.'));
+		Yii::app()->end();
+	}
+
 	public function actionAll_Trucks()
 	{
 		$this->layout = false;
