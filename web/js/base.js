@@ -100,7 +100,7 @@ foodtruckapp.method('mark_trucks', function(trucks){
 	});
 	this.truck_markers = [];
 	var that = this;
-	var img = "/images/truck.png";
+	var img = "images/truck.png";
 	$(trucks).each(function(i, v){
 		var t_latlng = new google.maps.LatLng(v.lat, v.lng);
 		var truck = new google.maps.Marker({
@@ -133,7 +133,7 @@ foodtruckapp.menu_interface = function($mainmenu, app){
 foodtruckapp.api_interface = function(app){
 	this.app = app;
 	this.gateway = ''; //or 'http://domain/';
-	this.endpoints = {'find_all':'/api/allfoodtrucks/', 'find_nearest':'/api/notrucks'};
+	this.endpoints = {'find_all':'api/allfoodtrucks/', 'find_nearest':'api/notrucks'};
 };
 
 foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
