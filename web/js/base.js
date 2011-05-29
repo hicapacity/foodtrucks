@@ -36,7 +36,7 @@ foodtruckapp.method('init', function(){
 foodtruckapp.method('init_map', function(canvas){
 	console.log("Map Initialized");
 	var myOptions = {
-		zoom: 8,
+		zoom: 10,
 		center: this.defaultLatLng,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		disableDefaultUI: true,
