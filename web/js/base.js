@@ -95,7 +95,10 @@ foodtruckapp.method('do_action', function(action){
 });
 
 foodtruckapp.method('mark_trucks', function(trucks){
-	this.truck_markers = []; // TODO: destroy icons properly (do we even need to)?
+	$(this.truck_markers).each(function(i, v){
+		v.setMap(null);
+	});
+	this.truck_markers = [];
 	var that = this;
 	var img = "/images/truck.png";
 	$(trucks).each(function(i, v){
