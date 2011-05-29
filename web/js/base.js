@@ -28,7 +28,7 @@ foodtruckapp.method('init', function(){
 	// Sub-modules
 	this.menu = null; // Object controlling menu
 	this.gmap = null; // google.map
-	this.truck_markers = []; // list of google.map.Marker for trucks
+	this.trucks = []; // list of foodtruckapp.Trucks
 	this.user_marker = null; // google.map.Marker for user location
 	this.geo_cb = null; // Callback to fetch user geo location
 	this.info_window = null; // google.map.InfoWindow for truck popup
@@ -124,35 +124,28 @@ foodtruckapp.method('do_action', function(action){
 	};
 });
 
+foodtruckapp.method('open_truck', function(i){
+	/* Find truck via internal id and open it */
+	if (i < 0){
+		i = this.trucks.length - 1;
+	}else if (i > this.trucks.length - 1){
+		i = 0;
+	}
+	google.maps.event.trigger(this.trucks[i].marker, 'click');
+});
+
 foodtruckapp.method('mark_trucks', function(trucks){
 	var that = this;
-	var img = "images/truck.png";
 	google.maps.event.clearListeners(this.gmap, 'click'); // WARNING, if we use any other
 	                                                      // click listeners we'll have to
 	                                                      // do this properly
-	$(this.truck_markers).each(function(i, v){
-		v.setMap(null);
+	$(this.trucks).each(function(i, v){
+		v.clear();
 	});
-	this.truck_markers = [];
+	this.trucks = [];
 	$(trucks).each(function(i, v){
-		var t_latlng = new google.maps.LatLng(v.lat, v.lng);
-		var truck = new google.maps.Marker({
-			position: t_latlng,
-			map: that.gmap,
-			icon: img,
-		});
-		truck._id = i;
-		truck._data = v;
-		that.truck_markers.push(truck);
-		google.maps.event.addListener(truck, 'click', function(){
-			that.truck_onclick(truck);
-		});
+		that.trucks.push(new foodtruckapp.Truck(i, v, that));
 	});
-});
-
-foodtruckapp.method('truck_onclick', function(truck){
-	this.info_window.setContent(truck._data.info);
-	this.info_window.open(this.gmap, truck);
 });
 
 foodtruckapp.MenuInterface = function($mainmenu, app){
@@ -202,6 +195,74 @@ foodtruckapp.ApiInterface.method('fetch', function(endpoint, args, cb){
 			}	
 		}
 	});
+});
+
+foodtruckapp.Truck = function(i, spec, app){
+	this.id = i;
+	this.app = app;
+	this.data = spec;
+	this.marker = null;
+	this.init();
+};
+
+foodtruckapp.Truck.method('init', function(){
+	var that = this;
+	var t_latlng = new google.maps.LatLng(this.data.lat, this.data.lng);
+	this.marker = new google.maps.Marker({
+		position: t_latlng,
+		map: this.app.gmap,
+		icon: this.get_icon()
+	});
+	google.maps.event.addListener(this.marker, 'click', function(){
+		that.onclick();
+	});
+});
+
+foodtruckapp.Truck.method('get_icon', function(){
+	var img = "images/truck.png";
+	return img;
+});
+
+foodtruckapp.Truck.method('onclick', function(){
+	var app = this.app;
+	app.info_window.setContent(this.info_content());
+	app.info_window.open(app.gmap, this.marker);
+});
+
+foodtruckapp.Truck.method('info_content', function(){
+	var that = this;
+	var $ret = $('<div>');
+	$ret.html(this.data.info);
+	var $container = $('<div>');
+	var $prev = $('<a>', {
+		href: '#prev',
+		title: 'Prev',
+		html: '&laquo;Prev'
+	});
+	$prev.css({'float':'left'});
+	$prev.click(function(e){
+		that.app.open_truck(that.id-1);	
+		return false;
+	});
+	var $next = $('<a>', {
+		href: '#next',
+		title: 'Next',
+		html: 'Next&raquo;'
+	});
+	$next.click(function(e){
+		that.app.open_truck(that.id+1);	
+		return false;
+	});
+	$next.css({'float':'right'});
+	$container.append($prev, $next);
+	$ret.append($container);
+	return $ret[0];
+});
+
+foodtruckapp.Truck.method('clear', function(){
+	/* Remove marker and clear references */
+	this.marker.setMap(null);
+	this.app = null;
 });
 
 $(document).ready(function(){
