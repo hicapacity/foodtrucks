@@ -24,6 +24,11 @@ foodtruckapp.method('init', function(){
 		this.init_map($map_canvas[0]);
 	}
 
+	this.info_window = new google.maps.InfoWindow({
+		content: "blah",
+		maxWidth: 200
+	});
+
 	/* Initialize Api Interface */
 	this.api_interface = new foodtruckapp.api_interface(this);
 });
@@ -106,10 +111,19 @@ foodtruckapp.method('mark_trucks', function(trucks){
 		var truck = new google.maps.Marker({
 			position: t_latlng,
 			map: that.gmap,
-			icon: img
+			icon: img,
 		});
+		truck._data = v;
 		that.truck_markers.push(truck);
+		google.maps.event.addListener(truck, 'click', function(){
+			that.truck_onclick(truck);
+		});
 	});
+});
+
+foodtruckapp.method('truck_onclick', function(truck){
+	this.info_window.setContent(truck._data.info);
+	this.info_window.open(this.gmap, truck);
 });
 
 foodtruckapp.menu_interface = function($mainmenu, app){
@@ -133,11 +147,21 @@ foodtruckapp.menu_interface = function($mainmenu, app){
 foodtruckapp.api_interface = function(app){
 	this.app = app;
 	this.gateway = ''; //or 'http://domain/';
-	this.endpoints = {'find_all':'api/allfoodtrucks/', 'find_nearest':'api/notrucks'};
+	this.endpoints = {
+		'find_all':'api/trucks',
+		'find_nearest':'api/truck/'
+	};
 };
 
 foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
 	var url = this.gateway + this.endpoints[endpoint];
+	if('id' in args){
+		url += args['id'];
+		args.splice('id', 1);
+	};
+	if(args.length){
+		url += "?" + $.param(args);
+	};
 	console.log("Requesting: " + url);
 	var that = this;
 	$.ajax({
@@ -152,5 +176,8 @@ foodtruckapp.api_interface.method('fetch', function(endpoint, args, cb){
 $(document).ready(function(){
 	var fta = new foodtruckapp();
 	fta.init();
+
+	//let's add all trucks right now
+	fta.do_action('find_all');
 });
 
