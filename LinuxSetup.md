@@ -40,4 +40,18 @@ Restart Apache so the configurations take effect
     sudo /etc/init.d/apache2 restart
 ```
 
+## MySQL setup
+
+Install mysql server (this also runs the server)
+
+```shell
+    sudo apt-get install mysql-server
+```
+
+Connect to the server and run the commands from the README (use the root password you setup while installing)
+
+```shell
+    mysql -u root -p
+```
+
 And you're done!
