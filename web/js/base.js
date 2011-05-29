@@ -12,12 +12,14 @@ foodtruckapp.method('init', function(){
 
 	this.defaultLatLng = new google.maps.LatLng(21.466, -157.9833);
 
-	this.truck_markers = [];
+	this.gmap = null; // google.map
+	this.truck_markers = []; // list of google.map.Marker for trucks
+	this.user_marker = null; // google.map.Marker for user location
+	this.geo_cb = null; // Callback to fetch user geo location
 
 	/* Initialize Menu */
 	this.menu = new foodtruckapp.menu_interface($("#mainmenu"), this);
 
-	this.gmap = null;
 	/* Initialize Google Maps */
 	var $map_canvas = $("#map_canvas");
 	if ($map_canvas){
@@ -48,38 +50,46 @@ foodtruckapp.method('init_map', function(canvas){
 		__: true
 	};
 	this.gmap = new google.maps.Map(canvas, myOptions);
+	this.gmap.setCenter(this.defaultLatLng);
+	var that = this;
 
-	var initialLocation = this.defaultLatLng;
-	var browserSupportFlag;
+	var geo_cb;
 	// Try W3C Geolocation (Preferred)
 	if(navigator.geolocation) {
 		console.log("Trying W3C Geolocation");
-		browserSupportFlag = true;
-		navigator.geolocation.getCurrentPosition(function(position) {
-			initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-		}, function() {
-		});
+		geo_cb = navigator.geolocation;
 	// Try Google Gears Geolocation
 	} else if (google.gears) {
 		console.log("Trying Google Gears Geolocation");
-		browserSupportFlag = true;
 		var geo = google.gears.factory.create('beta.geolocation');
-		geo.getCurrentPosition(function(position) {
-			initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
-		}, function() {
-		});
+		geo_cb = geo;
 	// Browser doesn't support Geolocation
 	} else {
 		console.log("No Geolocation, Sad Panda");
-		browserSupportFlag = false;
 	}
-	this.gmap.setCenter(initialLocation);
-	if (browserSupportFlag){
-		this.user_marker = new google.maps.Marker({
-			position: initialLocation,
-			map: this.gmap
-		});
+	if (geo_cb){
+		this.init_user_marker(geo_cb);
 	}
+});
+
+foodtruckapp.method('init_user_marker', function(geo_cb){
+	var that = this;
+	this.user_marker = new google.maps.Marker({
+		position: this.defaultLatLng,
+		map: this.gmap,
+		visible: false
+	});
+	this.geo_cb = geo_cb;
+	this.geo_cb.getCurrentPosition(function(position) {
+			console.log("geo_cb success!");
+			var loc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+			that.user_marker.setPosition(loc);
+			that.user_marker.setVisible(true);
+			that.gmap.setCenter(loc);
+		}, function() {
+			console.log("geo_cb failed?");
+		}
+	);
 });
 
 foodtruckapp.method('do_action', function(action){
