@@ -5,8 +5,10 @@ Install apache and php
     $ sudo apt-get install apache2 php5 php5-mysql
 
 Enable mod_rewrite
+```shell
     $ cd /etc/apache2/mods-enabled/
     $ sudo ln -s ../mods-available/rewrite.load
+```
 
 Add the apache directory configuration from the README
     $ sudo nano /etc/apache2/sites-available/default 
