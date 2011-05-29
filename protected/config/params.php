@@ -7,4 +7,7 @@ return array(
     'poweredByUrl'=>'http://hicapacity.org',
     'adminEmail'=>'maker@hicapacity.org',
     'contactEmail'=>'maker@hicapacity.org',
+
+    'trucks' => require( dirname( __FILE__ ) . '/foodtruck.php' ),
+
 );
