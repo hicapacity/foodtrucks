@@ -125,12 +125,15 @@ foodtruckapp.method('do_action', function(action){
 });
 
 foodtruckapp.method('mark_trucks', function(trucks){
+	var that = this;
+	var img = "images/truck.png";
+	google.maps.event.clearListeners(this.gmap, 'click'); // WARNING, if we use any other
+	                                                      // click listeners we'll have to
+	                                                      // do this properly
 	$(this.truck_markers).each(function(i, v){
 		v.setMap(null);
 	});
 	this.truck_markers = [];
-	var that = this;
-	var img = "images/truck.png";
 	$(trucks).each(function(i, v){
 		var t_latlng = new google.maps.LatLng(v.lat, v.lng);
 		var truck = new google.maps.Marker({
@@ -138,6 +141,7 @@ foodtruckapp.method('mark_trucks', function(trucks){
 			map: that.gmap,
 			icon: img,
 		});
+		truck._id = i;
 		truck._data = v;
 		that.truck_markers.push(truck);
 		google.maps.event.addListener(truck, 'click', function(){
