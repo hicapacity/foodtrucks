@@ -1,0 +1,1 @@
+coffee --join base.js --compile coffee/*.coffee
