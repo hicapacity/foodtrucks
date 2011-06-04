@@ -35,6 +35,23 @@ class TrucksTweets extends CreatedModifiedActiveRecord
 	}
 
 	/**
+	 * Scopes for this model:
+	 * 'coords' - this is intended to be used with the Trucks
+	 *   model since the relation name trucksTweets is associated with
+	 *   our Trucks model
+	 */
+    public function scopes()
+    {
+        return array(
+            'coords'=>array(
+				'condition'=>'geo_lat IS NOT NULL AND geo_long IS NOT NULL',
+				'order'=>'trucksTweets.id DESC',
+				'limit'=>1,
+            ),
+        );
+    }
+
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
