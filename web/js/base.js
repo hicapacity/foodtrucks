@@ -92,7 +92,8 @@ foodtruckapp.method('init_user_marker', function(geo_cb){
 	this.user_marker = new google.maps.Marker({
 		position: this.defaultLatLng,
 		map: this.gmap,
-		visible: false
+		visible: false,
+		animation: google.maps.Animation.DROP
 	});
 	this.geo_cb = geo_cb;
 	this.geo_cb.getCurrentPosition(function(position) {
@@ -211,7 +212,8 @@ foodtruckapp.Truck.method('init', function(){
 	this.marker = new google.maps.Marker({
 		position: t_latlng,
 		map: this.app.gmap,
-		icon: this.get_icon()
+		icon: this.get_icon(),
+		animation: google.maps.Animation.DROP
 	});
 	google.maps.event.addListener(this.marker, 'click', function(){
 		that.onclick();
@@ -234,27 +236,43 @@ foodtruckapp.Truck.method('info_content', function(){
 	var $ret = $('<div>');
 	$ret.html(this.data.info);
 	var $container = $('<div>');
+	$container.css({
+		'width': '100%'
+	});
 	var $prev = $('<a>', {
 		href: '#prev',
 		title: 'Prev',
 		html: '&laquo;Prev'
-	});
-	$prev.css({'float':'left'});
-	$prev.click(function(e){
-		that.app.open_truck(that.id-1);	
-		return false;
 	});
 	var $next = $('<a>', {
 		href: '#next',
 		title: 'Next',
 		html: 'Next&raquo;'
 	});
+	var $more_info = $('<a>', {
+		href: '#more',
+		title: 'Info',
+		html: 'Info'
+	});
+	$().add($prev).add($next).add($more_info).css({
+		'display': 'block',
+		'width': '33%',
+		'float': 'left',
+		'text-align': 'center'
+	});
+	$more_info.click(function(e){
+		that.app.open_truck_info(that.id-1);
+		return false;
+	});
+	$prev.click(function(e){
+		that.app.open_truck(that.id-1);	
+		return false;
+	});
 	$next.click(function(e){
 		that.app.open_truck(that.id+1);	
 		return false;
 	});
-	$next.css({'float':'right'});
-	$container.append($prev, $next);
+	$container.append($prev, $more_info, $next);
 	$ret.append($container);
 	return $ret[0];
 });
