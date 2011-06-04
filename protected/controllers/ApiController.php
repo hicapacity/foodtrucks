@@ -33,7 +33,7 @@ class ApiController extends Controller
 		Yii::app()->end();
 	}
 
-	public function actionRaise_Exception(){
+	public function actionRaiseException(){
 		/* Client testing api. This api call always returns an error */
 		$this->layout = false;
 		header('Content-type: application/json');
@@ -41,43 +41,65 @@ class ApiController extends Controller
 		Yii::app()->end();
 	}
 
-	public function actionAll_Trucks()
+	/**
+	 * Finds all trucks that have tweeted to us and their geo coords
+	 */
+	public function actionTrucks()
 	{
 		$this->layout = false;
 		header('Content-type: application/json');
-		$trucks = Array();
-		$lat = 21.466;
-		$lng = -157.9833;
-		$delta = 100;
-		for($i=0;$i<10;$i++){
-			$ntruck = Array(
-				"id"=>$i,
-				"lat"=>rand(-$delta, $delta)/1000+$lat,
-				"lng"=>rand(-$delta, $delta)/1000+$lng,
-				"name"=>"FoodTruck{$i}",
-				"info"=>"<h2>Blah Blah{$i}</h2><p>More blah blah blah</p>",
-			);
-			$trucks[] = $ntruck;
+		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
+		$trucks = array();
+		foreach ($trucksObj as $truck) {
+		    if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
+				$tweet = $truck->trucksTweets[0];
+				$trucks[] = Array(
+					"id"=>$truck->id,
+					"lat"=>$tweet->geo_lat,
+					"lng"=>$tweet->geo_long,
+					"name"=>$truck->twitter_username,
+					"info"=>"test",
+				);
+			}
+		}
+		if (count($trucks)==0) {
+			$trucks[] = "No Trucks Found!";
+			echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
+			Yii::app()->end();
 		}
 		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
 		Yii::app()->end();
 	}
-	public function actionTruck_By_Id($id){
+
+	/**
+	 * Find a single truck based on their primary key!
+	 */
+	public function actionTruck($id){
 		$id = (int)$id;
 		$this->layout = false;
 		header('Content-type: application/json');
-		$trucks = Array();
-		$lat = 21.466;
-		$lng = -157.9833;
-		$delta = 100;
-		$ntruck = Array(
-			"id"=>$id,
-			"lat"=>rand(-$delta, $delta)/1000+$lat,
-			"lng"=>rand(-$delta, $delta)/1000+$lng,
-			"name"=>"FoodTruck{$id}",
-			"info"=>"<h2>Blah Blah{$id}</h2><p>More blah blah blah</p>",
-		);
-		$trucks[] = $ntruck;
+		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
+			'condition'=>'t.id=:id',
+			'params'=>array(':id'=>$id),
+		));
+																	;
+		$trucks = array();
+		if (NULL !== $truck) {
+		    if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
+				$tweet = $truck->trucksTweets[0];	
+			}
+			$trucks[] = Array(
+				"id"=>$truck->id,
+				"lat"=>$tweet->geo_lat,
+				"lng"=>$tweet->geo_long,
+				"name"=>$truck->twitter_username,
+				"info"=>"test",
+			);
+		} else {
+			$trucks[] = "This truck does not exist";
+			echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
+			Yii::app()->end();
+		}
 		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
 		Yii::app()->end();
 	}
