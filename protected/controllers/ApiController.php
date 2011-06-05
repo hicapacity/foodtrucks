@@ -5,19 +5,6 @@ Routes are done in config.php.  If you need to add more api functions, you need 
 */
 class ApiController extends Controller
 {
-	/**
-	 * Declares class-based actions.
-	 */
-	public function actions()
-	{
-		return array(
-			// page action renders "static" pages stored under 'protected/views/site/pages'
-			// They can be accessed via: index.php?r=site/page&view=FileName
-			'page'=>array(
-				'class'=>'CViewAction',
-			),
-		);
-	}
 
 	/**
 	 * This is the default 'index' action that is invoked
@@ -25,20 +12,17 @@ class ApiController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
 		$this->layout = false;
-		header('Content-type: application/json');
-		echo json_encode(Array("blah"=>"blah2"));
-		Yii::app()->end();
+		$this->sendJsonResponse(Array(
+			"Streetgrindz API"=>"Yes"));
 	}
 
 	public function actionRaiseException(){
 		/* Client testing api. This api call always returns an error */
 		$this->layout = false;
-		header('Content-type: application/json');
-		echo json_encode(Array('status'=>'fail', 'data'=>'Your request failed because you wanted it to.'));
-		Yii::app()->end();
+		$this->sendJsonResponse(Array(
+			'status'=>'fail',
+			'data'=>'Your request failed because you wanted it to.'));
 	}
 
 	/**
@@ -47,28 +31,20 @@ class ApiController extends Controller
 	public function actionTrucks()
 	{
 		$this->layout = false;
-		header('Content-type: application/json');
 		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
 		$trucks = array();
 		foreach ($trucksObj as $truck) {
-		    if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
-				$tweet = $truck->trucksTweets[0];
-				$trucks[] = Array(
-					"id"=>$truck->id,
-					"lat"=>$tweet->geo_lat,
-					"lng"=>$tweet->geo_long,
-					"name"=>$truck->twitter_username,
-					"info"=>"test",
-				);
-			}
+			$this->_truck($trucks,$truck,false);
 		}
 		if (count($trucks)==0) {
-			$trucks[] = "No Trucks Found!";
-			echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
-			Yii::app()->end();
+			$this->sendJsonResponse(Array(
+				'status'=>'fail',
+				'data'=>'No Trucks Found!'));
+		} else {
+			$this->sendJsonResponse(Array(
+				'status'=>'success',
+				'data'=>$trucks));
 		}
-		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
-		Yii::app()->end();
 	}
 
 	/**
@@ -77,48 +53,50 @@ class ApiController extends Controller
 	public function actionTruck($id){
 		$id = (int)$id;
 		$this->layout = false;
-		header('Content-type: application/json');
 		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
 			'condition'=>'t.id=:id',
 			'params'=>array(':id'=>$id),
 		));
-																	;
 		$trucks = array();
 		if (NULL !== $truck) {
-		    if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
-				$tweet = $truck->trucksTweets[0];	
-				$trucks[] = Array(
-					"id"=>$truck->id,
-					"lat"=>$tweet->geo_lat,
-					"lng"=>$tweet->geo_long,
-					"name"=>$truck->twitter_username,
-					"info"=>"test",
-				);
-			} else {
-				$trucks[] = "This truck has no tweets!";
-				echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
-				Yii::app()->end();
-			}
+			$this->_truck($trucks,$truck);
+			$this->sendJsonResponse(Array(
+				'status'=>'success',
+				'data'=>$trucks));
 		} else {
-			$trucks[] = "This truck does not exist..";
-			echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
-			Yii::app()->end();
+			$this->sendJsonResponse(Array(
+				'status'=>'fail',
+				'data'=>'This truck does not exist..'));
 		}
-		echo json_encode(Array('status'=>'success', 'data'=>$trucks));
-		Yii::app()->end();
+	}
+	
+	function _truck(&$trucks,$truck,$noTweets=true) {
+		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
+			$tweet = $truck->trucksTweets[0];	
+			$trucks[] = Array(
+				"id"=>$truck->id,
+				"lat"=>$tweet->geo_lat,
+				"lng"=>$tweet->geo_long,
+				"name"=>$truck->twitter_username,
+				"info"=>"test",
+			);
+		} else if ($noTweets) {
+			$this->sendJsonResponse(Array(
+				'status'=>'fail',
+				'data'=>'This truck has no tweets!'));
+		}
 	}
 
 	/**
 	 * This is the action to handle external exceptions.
 	 */
-	public function actionError()
-	{
-	    if($error=Yii::app()->errorHandler->error)
-	    {
-	    	if(Yii::app()->request->isAjaxRequest)
+	public function actionError() {
+	    if($error=Yii::app()->errorHandler->error) {
+	    	if(Yii::app()->request->isAjaxRequest) {
 	    		echo $error['message'];
-	    	else
+	    	} else {
 	        	$this->render('error', $error);
+	    	}
 	    }
 	}
 }
