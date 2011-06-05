@@ -22,6 +22,7 @@ class Controller extends CController
 	public $breadcrumbs=array();
 	
 	protected function sendJsonResponse($arrOut) {
+		$this->layout = false;
 		header('Content-type: application/json');
 		echo json_encode($arrOut);
 		Yii::app()->end();		

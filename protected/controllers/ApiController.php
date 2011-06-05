@@ -12,14 +12,12 @@ class ApiController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->layout = false;
 		$this->sendJsonResponse(Array(
 			"Streetgrindz API"=>"Yes"));
 	}
 
 	public function actionRaiseException(){
 		/* Client testing api. This api call always returns an error */
-		$this->layout = false;
 		$this->sendJsonResponse(Array(
 			'status'=>'fail',
 			'data'=>'Your request failed because you wanted it to.'));
@@ -30,7 +28,6 @@ class ApiController extends Controller
 	 */
 	public function actionTrucks()
 	{
-		$this->layout = false;
 		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
 		$trucks = array();
 		foreach ($trucksObj as $truck) {
@@ -52,7 +49,6 @@ class ApiController extends Controller
 	 */
 	public function actionTruck($id){
 		$id = (int)$id;
-		$this->layout = false;
 		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
 			'condition'=>'t.id=:id',
 			'params'=>array(':id'=>$id),
