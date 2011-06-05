@@ -1,4 +1,4 @@
-root = exports ? this
+root = exports ? @
 
 class Main
 	constructor: () ->
@@ -15,7 +15,7 @@ class Main
 		@geo_cb = null
 		@info_window = null
 
-		@menu = new Menu @opts['menu_dom_id'], this
+		@menu = new Menu @opts['menu_dom_id'], @
 		$map_canvas = $(@opts['gmap_dom_id'])
 		if $map_canvas
 			@init_map $map_canvas[0]
@@ -26,7 +26,7 @@ class Main
 		@info_window = new google.maps.InfoWindow info_opts
 
 
-		@api_interface = new Api this
+		@api_interface = new Api @
 
 	init_map: (canvas) ->
 		console.log "Map Initialized"
@@ -91,12 +91,19 @@ class Main
 		google.maps.event.clearListeners @gmap, 'click'
 		_ = (v.clear() for v in @trucks)	
 		@trucks = (new Truck(i, v, @) for v, i in trucks)
-		
 
+	open_truck: (i) ->
+		if i < 0
+			i = @trucks.length - 1
+		else if i > @trucks.length - 1
+			i = 0
+		google.maps.event.trigger @trucks[i].marker, 'click'
+		
 root.foodtruckapp = Main
 
 Init = () ->
 	app = new Main()
+	app.do_action 'find_all'
 
 $(document).ready ->
 	Init()

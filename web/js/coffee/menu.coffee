@@ -12,7 +12,7 @@ class Menu
 
 	on_click: (e) =>
 		$link = $(e.target)
-		action = $link.attr('href').split('#')[1]
-		@app.do_action(action)
+		action = $link.attr('href').split '#'
+		@app.do_action(action[1])
 		false
 

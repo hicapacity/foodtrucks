@@ -162,12 +162,21 @@
         return _results;
       }).call(this);
     };
+    Main.prototype.open_truck = function(i) {
+      if (i < 0) {
+        i = this.trucks.length - 1;
+      } else if (i > this.trucks.length - 1) {
+        i = 0;
+      }
+      return google.maps.event.trigger(this.trucks[i].marker, 'click');
+    };
     return Main;
   })();
   root.foodtruckapp = Main;
   Init = function() {
     var app;
-    return app = new Main();
+    app = new Main();
+    return app.do_action('find_all');
   };
   $(document).ready(function() {
     return Init();
@@ -190,8 +199,8 @@
     Menu.prototype.on_click = function(e) {
       var $link, action;
       $link = $(e.target);
-      action = $link.attr('href').split('#')[1];
-      this.app.do_action(action);
+      action = $link.attr('href').split('#');
+      this.app.do_action(action[1]);
       return false;
     };
     return Menu;
@@ -201,6 +210,7 @@
       this.id = id;
       this.data = data;
       this.app = app;
+      this.on_click = __bind(this.on_click, this);
       this.marker = null;
       this.init();
     }
@@ -223,7 +233,53 @@
       return this.app.info_window.open(this.app.gmap, this.marker);
     };
     Truck.prototype.info_content = function() {
-      return "blah";
+      var $container, $more_info, $next, $prev, $ret;
+      $ret = $('<div>');
+      $ret.html('<h2>' + this.data.info + '</h2><p>Stuff stuff Stuff</p>');
+      $container = $('<div>');
+      $container.css({
+        width: '100%'
+      });
+      $prev = $('<a>', {
+        href: '#prev',
+        title: 'Prev',
+        html: '&laquo;Prev'
+      });
+      $next = $('<a>', {
+        href: '#next',
+        title: 'Next',
+        html: 'Next&raquo'
+      });
+      $more_info = $('<a>', {
+        href: '#more',
+        title: 'Info',
+        html: 'Info'
+      });
+      $().add($prev).add($next).add($more_info).css({
+        display: 'block',
+        width: '33%',
+        float: 'left',
+        textAlign: 'center'
+      });
+      $more_info.click(__bind(function(e) {
+        this.app.open_truck_info(this.id - 1);
+        return false;
+      }, this));
+      $prev.click(__bind(function(e) {
+        this.app.open_truck(this.id - 1);
+        return false;
+      }, this));
+      $next.click(__bind(function(e) {
+        this.app.open_truck(this.id + 1);
+        return false;
+      }, this));
+      $container.append($prev, $more_info, $next);
+      $ret.append($container);
+      return $ret[0];
+    };
+    Truck.prototype.clear = function() {
+      this.marker.setMap(null);
+      return this.app = null;
     };
     return Truck;
   })();
