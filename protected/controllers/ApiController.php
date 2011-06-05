@@ -87,16 +87,20 @@ class ApiController extends Controller
 		if (NULL !== $truck) {
 		    if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
 				$tweet = $truck->trucksTweets[0];	
+				$trucks[] = Array(
+					"id"=>$truck->id,
+					"lat"=>$tweet->geo_lat,
+					"lng"=>$tweet->geo_long,
+					"name"=>$truck->twitter_username,
+					"info"=>"test",
+				);
+			} else {
+				$trucks[] = "This truck has no tweets!";
+				echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
+				Yii::app()->end();
 			}
-			$trucks[] = Array(
-				"id"=>$truck->id,
-				"lat"=>$tweet->geo_lat,
-				"lng"=>$tweet->geo_long,
-				"name"=>$truck->twitter_username,
-				"info"=>"test",
-			);
 		} else {
-			$trucks[] = "This truck does not exist";
+			$trucks[] = "This truck does not exist..";
 			echo json_encode(Array('status'=>'fail', 'data'=>$trucks));
 			Yii::app()->end();
 		}
