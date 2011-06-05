@@ -84,23 +84,36 @@ $settingsMain = array(
 
 
 // TODO: Need to have separate configuration files for production/dev
-if ($_SERVER['HTTP_HOST'] === 'www.myurl.com' || $_SERVER['HTTP_HOST'] === 'myurl.com') {
+if ($_SERVER['HTTP_HOST'] === 'www.streetgrindz.com' || $_SERVER['HTTP_HOST'] === 'streetgrindz.com') {
     $settingsMain['components']['log']['routes'][] =
-	  array(
-		'class' => 'CEmailLogRoute',
-		'levels' => 'error, warning',
-		'emails' => 'maker@hicapacity.org',
-	  );
+    array(
+        'class' => 'CEmailLogRoute',
+        'levels' => 'error, warning',
+        'emails' => 'maker@hicapacity.org',
+    );
 } else {
     $settingsMain['components']['log']['routes'][] =
-	  array(
-		'class' => 'CWebLogRoute',
-		'levels' => 'error, warning',
-	  );
+    array(
+        'class' => 'CWebLogRoute',
+        'levels' => 'error, warning',
+    );
     $settingsMain['modules']['gii'] =
-	  array(
-		'class' => 'system.gii.GiiModule',
-		'password' => 'admin',
-	  );
+    array(
+        'class' => 'system.gii.GiiModule',
+        'password' => 'admin',
+        'ipFilters' => array(
+            '192.168.1.100',
+            '192.168.1.101',
+            '192.168.1.102',
+            '192.168.1.103',
+            '192.168.1.104',
+            '192.168.1.105',
+            '192.168.1.106',
+            '192.168.1.107',
+            '192.168.1.108',
+            '192.168.1.109',
+            '192.168.1.110'
+        ),        
+    );
 }
 return $settingsMain;

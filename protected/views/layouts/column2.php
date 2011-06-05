@@ -1,11 +1,11 @@
-<?php $this->beginContent('//layouts/main'); ?>
+<?php $this->beginContent('//layouts/admin'); ?>
 <div class="container">
 	<div class="span-19">
 		<div id="content">
 			<?php echo $content; ?>
 		</div><!-- content -->
 	</div>
-	<?php if (0) { ?>
+	<?php if (1) { ?>
 	<div class="span-5 last">
 		<div id="sidebar">
 		<?php
