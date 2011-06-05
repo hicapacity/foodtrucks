@@ -26,36 +26,35 @@ class QueryFoodTruckCommand extends CConsoleCommand
 
         $mentions = $this->connection->get('statuses/mentions');
         $num_mentions = count($mentions);
-
         for ($i = 0; $i < $num_mentions; $i++)
         {
             $mention = $mentions[$i];
-
             if (TwitterHelper::isTrackable($mention) &&
                 TwitterHelper::isGeoLocatable($mention)) {
 
                 $twitter_id = $mention->user->id_str;
-
+		//echo 'Valid tweet found for: '. $mention->user->screen_name . "\n";
                 // TODO: We don't like this. Helper to get_or_insert
-                $truck = Trucks::model()->findByAttributes( 
+                $truck = Trucks::model()->findByAttributes(
                     array('twitter_id' => $twitter_id));
 
                 if (NULL === $truck)
                 {
                     $truck = new Trucks;
                     $truck->twitter_id = $twitter_id;
-                    $truck->twitter_username = $mention->user->name;
+                    $truck->twitter_username = $mention->user->screen_name;
                     if ($truck->validate()) {
                         $truck->save();
                     } else {
+			echo 'New Truck Twitter Count Inserion Failed: '.$mention->user->name."\n";
                         // TODO: Put something on stderr so cron can pick it up
                     }
                 }
 
-                $truck_tweet = TrucksTweets::model()->findByAttributes( 
+                $truck_tweet = TrucksTweets::model()->findByAttributes(
                     array('tweet_id' => $mention->id_str));
 
-                if (NULL === $truck_tweet) 
+                if (NULL === $truck_tweet)
                 {
                     $truck_tweet = new TrucksTweets;
                     $truck_tweet->truck_id = $truck->id;
