@@ -22,7 +22,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/')),
-				array('label'=>'Manage Twitter Accounts', 'url'=>array('/TwitterAccounts/admin')),
+				array('label'=>'Manage Twitter Accounts', 'url'=>array('/TwitterAccounts/admin'),'visible'=>!Yii::app()->user->isGuest),
                 array(
                     'label' => 'Login',
                     'url' => array('/site/login'),

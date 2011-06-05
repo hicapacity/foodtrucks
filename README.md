@@ -72,7 +72,11 @@ and:
 
 from the root of the project
 
-To get a sample truck/tweet, please run from root/protected:
+To get a sample truck/tweet, first you must add some valid twitter accounts.  
+To do this, navigaate to http://yoursite.com/site/login.
+The user accounts are configured in the protected/config/main.php file (this will move to another file).
+Once logged in, you can then manage the twitter accounts.
+Finally, after you have added some twitter accounts, please run from root/protected:
 
 ``./yiic queryfoodtruck``
 
