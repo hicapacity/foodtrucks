@@ -1,114 +1,16 @@
-html, body{
-	height: 100%;
-	overflow: hidden;
-}
-#page{
-	height: 100%;
-	width: 100%;
-}
-a{
-	color: inherit;
-	text-decoration: none;
-}
-a:hover{
-	color: inherit;
-}
-#header{
-	position: absolute;
-	white-space: nowrap;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 32px;
-	color: white;
-	background-color: #627aad;
-	border-bottom: 1px solid #1d4088;
-	font-size: 20px;
-	line-height: 32px;
-}
-#header #logo{
-	padding-left: 0.62em;
-}
-#header a{
-	color: #eee;
-}
-#header a:hover{
-	color: #fff;
-	text-shadow: 1px 1px #666;
-}
-#mainmenu{
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	height: 32px;
-	line-height: 32px;
-}
-#mainmenu #menutoggle{
-	display: inline-block;
-	padding: 0px 0.62em;
-	height: 32px;
-	line-height: 32px;
-	background-color: #829abd;
-	border-left: 1px solid #3d60a8;
-}
-#mainmenu #menutoggle span{
-	font-weight: bold;
-	margin-right: 5px;
-}
-#mainmenu ul{
-	display: none;
-	position: absolute;
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-	top: 32px;
-	right: 0px;
-	z-index: 300;
-}
-#mainmenu ul li{
-	background-color: white;
-	display: block;
-	padding: 5px 0.62em;
-	border-bottom: 1px solid #3d60a8;
-}
-#mainmenu ul a{
-	display: block;
-	width: 100%;
-	color: #3d60a8;
-}
-#mainmenu ul a:hover{
-	color: #3d60a8;
-}
-#footer{
-	position: absolute;
-	text-align: center;
-	white-space: nowrap;
-	bottom: 0px;
-	left: 0px;
-	height: 16px;
-	font-size: 10px;
-	line-height: 16px;
-	width: 100%;
-	background-color: #EDEFF4;
-}
-#content_wrapper{
-	height: 100%;
-	width: 100%;
-	padding-top: 32px;
-	padding-bottom: 16px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-}
-#content, #content_map{
-	height: 100%;
-	width: 100%;
-}
-#content{
-	overflow: auto;
-}
-#map_canvas{
-	width: 100%;
-	height: 100%;
-}
+html,body{height:100%;overflow:hidden;}
+#page{height:100%;width:100%;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:inherit;}
+#header{position:absolute;white-space:nowrap;top:0px;left:0px;width:100%;height:32px;color:white;background-color:#627aad;border-bottom:1px solid #4b6291;font-size:20px;line-height:32px;}#header #logo{padding-left:0.62em;}
+#header a{color:#eee;}
+#header a:hover{color:#fff;text-shadow:1px 1px #666;}
+#mainmenu{position:absolute;top:0px;right:0px;height:32px;line-height:32px;}#mainmenu #menutoggle{display:inline-block;padding:0px 0.62em;height:32px;line-height:32px;background-color:#8496be;border-left:1px solid #28344e;}#mainmenu #menutoggle span{font-weight:bold;margin-right:5px;}
+#mainmenu ul{display:none;position:absolute;list-style-type:none;margin:0px;padding:0px;top:32px;right:0px;z-index:300;}#mainmenu ul li{background-color:white;display:block;padding:5px 0.62em;border-bottom:1px solid #3d60a8;}
+#mainmenu ul a{display:block;width:100%;color:#3d60a8;}
+#mainmenu ul a:hover{color:#3d60a8;}
+#content_wrapper{height:100%;width:100%;padding-top:32px;padding-bottom:16px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;}
+#content,#content_map{height:100%;width:100%;}
+#content{overflow:auto;}
+#map_canvas{height:100%;width:100%;}
+#footer{width:100%;position:absolute;text-align:center;white-space:nowrap;bottom:0px;left:0px;height:16px;font-size:10px;line-height:16px;background-color:#ffffff;}
