@@ -55,3 +55,9 @@ Connect to the server and run the commands from the README (use the root passwor
 ```
 
 And you're done!
+
+Development setup
+============
+```shell
+    sudo apt-get install coffeescript
+```
