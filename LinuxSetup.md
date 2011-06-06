@@ -61,3 +61,14 @@ Development setup
 ```shell
     sudo apt-get install coffeescript
 ```
+
+Workaround bug 777554:
+
+https://bugs.launchpad.net/ubuntu/+source/coffeescript/+bug/777554
+
+Add a link to nodejs on your $PATH
+
+```shell
+    cd ~/bin;
+    ln -s /usr/bin/node nodejs
+```
