@@ -24,19 +24,8 @@ a{
 a:hover{
 	color: inherit;
 }
-#header{
-	position: absolute;
-	white-space: nowrap;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: @header_height;
-	color: white;
-	background-color: @blue;
-	border-bottom: 1px solid darken(@blue, 10%);
-	font-size: @header_font_size;
-	line-height: @header_height;
-	#logo{
+.header{
+	.logo{
 		padding-left: 0.62em;
 	}
 	a{
@@ -47,17 +36,13 @@ a:hover{
 		text-shadow: 1px 1px #666;
 	}
 }
-#mainmenu{
+.mainmenu{
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	height: @header_height;
-	line-height: @header_height;
 	#menutoggle{
 		display: inline-block;
 		padding: 0px 0.62em;
-		height: @header_height;
-		line-height: @header_height;
 		background-color: lighten(@blue, 10%);
 		border-left: 1px solid darken(@blue, 30%);
 		span{
@@ -90,30 +75,15 @@ a:hover{
 		}
 	}
 }
-#content_wrapper{
-	.expand;
-	padding-top: @header_height;
-	padding-bottom: @footer_height;
-	.box-sizing(border-box);
+.content{
 }
-#content, #content_map{
+#content_map{
+	position: absolute;
 	.expand;
-}
-#content{
-	overflow: auto;
 }
 #map_canvas{
 	.expand;
 }
-#footer{
-	width: 100%;
-	position: absolute;
+.footer{
 	text-align: center;
-	white-space: nowrap;
-	bottom: 0px;
-	left: 0px;
-	height: @footer_height;
-	font-size: @footer_font_size;
-	line-height: @footer_height;
-	background-color: lighten(@blue, 50%);
 }
