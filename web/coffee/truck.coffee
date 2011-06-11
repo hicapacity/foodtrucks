@@ -62,3 +62,7 @@ class Truck
 		@marker.setMap null
 		@app = null
 
+root = exports ? @
+unless root.foodtruckapp
+	root.foodtruckapp = {}
+root.foodtruckapp.Truck = Truck

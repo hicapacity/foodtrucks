@@ -1,5 +1,6 @@
 class Menu
 	constructor: (@root, @app) ->
+		console.log "Menu Initialized"
 		@menu = $("ul", @root)
 		@toggle = $("#menutoggle", @root)
 
@@ -16,3 +17,7 @@ class Menu
 		@app.do_action(action[1])
 		false
 
+root = exports ? @
+unless root.foodtruckapp
+	root.foodtruckapp = {}
+root.foodtruckapp.Menu = Menu
