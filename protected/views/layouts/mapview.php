@@ -1,5 +1,32 @@
 <?php $this->beginContent('//layouts/main'); ?>
-<div id="content_map">
-	<?php echo $content; ?>
-</div><!-- content -->
+	<div data-fullscreen="true" data-role="page" data-theme="b" class="content_wrapper">
+		<div data-role="header" data-position="fixed">
+			<h1><?php echo CHtml::encode(Yii::app()->name); ?></h1>
+			<a data-icon="gear" data-rel="dialog" class="ui-btn-right" href="#menu">Menu</a>
+		</div>
+		<div data-role="content" class="content">
+			<div id="content_map">
+				<?php echo $content; ?>
+			</div><!-- content -->
+		</div>
+		<div data-role="footer" data-position="fixed" class="footer">
+			<h1>
+			&copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->params['siteName']); ?>.
+			Powered by: <a href="<?php echo CHtml::encode(Yii::app()->params['poweredByUrl']); ?>"><?php echo CHtml::encode(Yii::app()->params['poweredBy']); ?></a>
+			</h1>
+		</div>
+	</div>
+
+	<div id="menu" data-role="page" data-theme="b">
+		<div data-role="header">
+			<h1>Menu</h1>
+		</div>
+		<div data-role="content">
+		<ul data-role="listview" data-inset="true">
+			<li><a href="#" id="foodtrucks_load_nearest">Find Nearest</a></li>
+			<li><a href="#" id="foodtrucks_load_nearest">Find Nearest</a></li>
+			<li><a href="/site/page?view=about" id="foodtrucks_load_nearest">Info</a></li>
+		</ul>
+		</div>
+	</div>
 <?php $this->endContent(); ?>

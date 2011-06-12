@@ -105,6 +105,7 @@ root.foodtruckapp.Main = Main
 Init = () ->
 	app = new foodtruckapp.Main()
 	app.do_action 'find_all'
+	$.fixedToolbars.setTouchToggleEnabled false;
 
 $(document).ready ->
 	Init()

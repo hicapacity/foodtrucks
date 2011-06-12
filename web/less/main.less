@@ -1,85 +1,15 @@
 @import "utils";
 
-@blue: #627aad;
-@header_font_size: 20px;
-@header_height: 32px;
-@footer_height: 16px;
-@footer_font_size: 10px;
 .expand(){
 	height: 100%;
 	width: 100%;
 }
 
-html, body{
-	height: 100%;
-	overflow: hidden;
-}
-#page{
-	.expand;
-}
-a{
-	color: inherit;
-	text-decoration: none;
-}
-a:hover{
-	color: inherit;
-}
-.header{
-	.logo{
-		padding-left: 0.62em;
-	}
-	a{
-		color: #eee;
-	}
-	a:hover{
-		color: #fff;
-		text-shadow: 1px 1px #666;
-	}
-}
-.mainmenu{
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	#menutoggle{
-		display: inline-block;
-		padding: 0px 0.62em;
-		background-color: lighten(@blue, 10%);
-		border-left: 1px solid darken(@blue, 30%);
-		span{
-			font-weight: bold;
-			margin-right: 5px;
-		}
-	}
-	ul{
-		display: none;
-		position: absolute;
-		list-style-type: none;
-		margin: 0px;
-		padding: 0px;
-		top: @header_height;
-		right: 0px;
-		z-index: 300;
-		li{
-			background-color: white;
-			display: block;
-			padding: 5px 0.62em;
-			border-bottom: 1px solid #3d60a8;
-		}
-		a{
-			display: block;
-			width: 100%;
-			color: #3d60a8;
-		}
-		a:hover{
-			color: #3d60a8;
-		}
-	}
-}
-.content{
-}
 #content_map{
 	position: absolute;
 	.expand;
+	.box-sizing(border-box);
+	padding-bottom: 33px;
 }
 #map_canvas{
 	.expand;
