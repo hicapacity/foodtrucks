@@ -43,7 +43,7 @@ class ApiController extends Controller
 		if (count($truck)){
 			$this->sendJsonResponse(Array(
 				'status'=>'success',
-				'data'=>$trucks));
+				'data'=>$truck[0]));
 		}else{
 			$this->sendJsonResponse(Array(
 				'status'=>'fail',
