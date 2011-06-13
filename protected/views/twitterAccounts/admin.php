@@ -45,6 +45,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		//'id',
 		'twitter_name',
 		'twitter_id',
+		'truck_info',
 		'created',
 		'modified',
 		array(

@@ -21,6 +21,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'truck_info'); ?>
+		<?php echo $form->textArea($model,'truck_info',array('rows'=>6, 'cols'=>50)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'created'); ?>
 		<?php echo $form->textField($model,'created'); ?>
 	</div>

@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'twitter_accounts':
  * @property integer $id
  * @property string $twitter_name
+ * @property string $truck_info
  * @property string $twitter_id
  * @property string $created
  * @property string $modified
@@ -42,9 +43,10 @@ class TwitterAccounts extends CreatedModifiedActiveRecord
 			array('twitter_id', 'numerical', 'integerOnly'=>true),
 			array('twitter_id', 'length', 'max'=>20),
 			array('twitter_name', 'length', 'max'=>64),
+			array('truck_info', 'length', 'max'=>65536),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, twitter_id, twitter_name, created, modified', 'safe', 'on'=>'search'),
+			array('id, twitter_id, twitter_name, truck_info, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +78,7 @@ class TwitterAccounts extends CreatedModifiedActiveRecord
 			'id' => 'ID',
 			'twitter_id' => 'Twitter ID',
 			'twitter_name' => 'Twitter Name',
+			'truck_info' => 'Truck Info',
 			'created' => 'Created',
 			'modified' => 'Modified',
 		);
@@ -95,6 +98,8 @@ class TwitterAccounts extends CreatedModifiedActiveRecord
 		//$criteria->compare('id',$this->id);
 		$criteria->compare('twitter_name',$this->twitter_name,true);
 		$criteria->compare('twitter_id',$this->twitter_id,true);
+		$criteria->compare('twitter_name',$this->twitter_name,true);
+		$criteria->compare('truck_info',$this->truck_info,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('modified',$this->modified,true);
 

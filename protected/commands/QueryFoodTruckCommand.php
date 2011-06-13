@@ -29,24 +29,25 @@ class QueryFoodTruckCommand extends CConsoleCommand
         for ($i = 0; $i < $num_mentions; $i++)
         {
             $mention = $mentions[$i];
-            if (TwitterHelper::isTrackable($mention) &&
+            $twitterAccount = TwitterHelper::getTwitterAccount($mention);
+            if (false !== $twitterAccount &&
                 TwitterHelper::isGeoLocatable($mention)) {
 
                 $twitter_id = $mention->user->id_str;
-		//echo 'Valid tweet found for: '. $mention->user->screen_name . "\n";
+                echo 'Valid tweet found for: '. $mention->user->screen_name . "\n";
                 // TODO: We don't like this. Helper to get_or_insert
                 $truck = Trucks::model()->findByAttributes(
                     array('twitter_id' => $twitter_id));
-
                 if (NULL === $truck)
                 {
                     $truck = new Trucks;
                     $truck->twitter_id = $twitter_id;
                     $truck->twitter_username = $mention->user->screen_name;
+                    $truck->twitter_account_id = $twitterAccount->id;
                     if ($truck->validate()) {
                         $truck->save();
                     } else {
-			echo 'New Truck Twitter Count Inserion Failed: '.$mention->user->name."\n";
+                        echo 'New Truck Twitter Count Inserion Failed: '.$mention->user->name."\n";
                         // TODO: Put something on stderr so cron can pick it up
                     }
                 }
@@ -64,6 +65,8 @@ class QueryFoodTruckCommand extends CConsoleCommand
                     $truck_tweet->geo_long = $mention->coordinates->coordinates[0];
                     $truck_tweet->save();
                 }
+            } else {
+                echo 'Bad Tweeter: '.$mention->user->screen_name.$mention->text."\n";                
             }
         }
     }
