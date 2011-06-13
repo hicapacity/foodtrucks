@@ -35,7 +35,7 @@ class Truck
 			html: 'Next&raquo',
 		}
 		$more_info = $ '<a>', {
-			href: '#more',
+			href: '/truck/id/' + @data.id,
 			title: 'Info',
 			html: 'Info',
 		}
