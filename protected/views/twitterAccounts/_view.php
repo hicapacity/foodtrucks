@@ -12,6 +12,10 @@
 	<?php echo CHtml::encode($data->twitter_id); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('truck_info')); ?>:</b>
+    <?php echo CHtml::encode($data->truck_info); ?>
+    <br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
 	<?php echo CHtml::encode($data->created); ?>
 	<br />

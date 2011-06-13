@@ -1,5 +1,3 @@
-root = exports ? @
-
 class Main
 	constructor: () ->
 		console.log "Food Truck App Initialized"
@@ -15,7 +13,7 @@ class Main
 		@geo_cb = null
 		@info_window = null
 
-		@menu = new Menu @opts['menu_dom_id'], @
+		@menu = new foodtruckapp.Menu @opts['menu_dom_id'], @
 		$map_canvas = $(@opts['gmap_dom_id'])
 		if $map_canvas
 			@init_map $map_canvas[0]
@@ -26,7 +24,7 @@ class Main
 		@info_window = new google.maps.InfoWindow info_opts
 
 
-		@api_interface = new Api @
+		@api_interface = new foodtruckapp.Api @
 
 	init_map: (canvas) ->
 		console.log "Map Initialized"
@@ -90,7 +88,7 @@ class Main
 		console.log trucks
 		google.maps.event.clearListeners @gmap, 'click'
 		_ = (v.clear() for v in @trucks)	
-		@trucks = (new Truck(i, v, @) for v, i in trucks)
+		@trucks = (new foodtruckapp.Truck(i, v, @) for v, i in trucks)
 
 	open_truck: (i) ->
 		if i < 0
@@ -98,12 +96,16 @@ class Main
 		else if i > @trucks.length - 1
 			i = 0
 		google.maps.event.trigger @trucks[i].marker, 'click'
-		
-root.foodtruckapp = Main
+
+root = exports ? @
+unless root.foodtruckapp
+	root.foodtruckapp = {}
+root.foodtruckapp.Main = Main
 
 Init = () ->
-	app = new Main()
+	app = new foodtruckapp.Main()
 	app.do_action 'find_all'
+	$.fixedToolbars.setTouchToggleEnabled false;
 
 $(document).ready ->
 	Init()

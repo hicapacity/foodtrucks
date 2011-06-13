@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form wide">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'twitter-accounts-form',
@@ -21,14 +21,20 @@
 		<?php echo $form->error($model,'twitter_name'); ?>
 	</div>
 
-	<?php if ($model->isNewRecord) { ?>
 	<div class="row">
-		<?php echo CHtml::encode($model->created); ?>
+		<?php echo $form->labelEx($model,'truck_info'); ?>
+		<?php echo $form->textArea($model,'truck_info',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'truck_info'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo CHtml::encode($model->modified); ?>
-	</div>
+	<?php if ($model->isNewRecord) { ?>
+		<div class="row">
+			<?php echo CHtml::encode($model->created); ?>
+		</div>
+	
+		<div class="row">
+			<?php echo CHtml::encode($model->modified); ?>
+		</div>
 	<?php } ?>
 
 	<div class="row buttons">

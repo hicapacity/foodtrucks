@@ -27,7 +27,8 @@ class ApiController extends Controller
 	 */
 	public function actionTrucks()
 	{
-		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
+		$trucksObj = Trucks::model()->with('trucksTweets:coords',
+				'twitterAccount')->findAll();
 		$trucks = array();
 		foreach ($trucksObj as $truck) {
 			$this->_truck($trucks,$truck,false);
@@ -48,10 +49,11 @@ class ApiController extends Controller
 	 */
 	public function actionTruck($id){
 		$id = (int)$id;
-		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
-			'condition'=>'t.id=:id',
-			'params'=>array(':id'=>$id),
-		));
+		$truck = Trucks::model()->with('trucksTweets:coords',
+			'twitterAccount')->find(array(
+				'condition'=>'t.id=:id',
+				'params'=>array(':id'=>$id),
+			));
 		$trucks = array();
 		if (NULL !== $truck) {
 			$this->_truck($trucks,$truck);
@@ -73,7 +75,7 @@ class ApiController extends Controller
 				"lat"=>$tweet->geo_lat,
 				"lng"=>$tweet->geo_long,
 				"name"=>$truck->twitter_username,
-				"info"=>"test",
+				"info"=>$truck->twitterAccount->truck_info,
 			);
 		} else if ($noTweets) {
 			$this->sendJsonResponse(Array(

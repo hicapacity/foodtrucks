@@ -40,13 +40,13 @@ class Trucks extends CreatedModifiedActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('twitter_id, twitter_username, created, modified, icon_url', 'required'),
-			array('twitter_id', 'numerical', 'integerOnly'=>true),
+			array('twitter_id, twitter_account_id, twitter_username, created, modified, icon_url', 'required'),
+			array('twitter_id, twitter_account_id', 'numerical', 'integerOnly'=>true),
 			array('twitter_username', 'length', 'max'=>64),
 			array('icon_url', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, twitter_id, twitter_username, icon_url, created, modified', 'safe', 'on'=>'search'),
+			array('id, twitter_id, twitter_account_id, twitter_username, icon_url, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +68,7 @@ class Trucks extends CreatedModifiedActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'twitterAccount' => array(self::BELONGS_TO, 'TwitterAccounts', 'twitter_account_id'),
 			'trucksTweets' => array(self::HAS_MANY, 'TrucksTweets', 'truck_id'),
 		);
 	}
@@ -80,6 +81,7 @@ class Trucks extends CreatedModifiedActiveRecord
 		return array(
 			'id' => 'ID',
 			'twitter_id' => 'Twitter',
+			'twitter_account_id' => 'Twitter Account ID',
 			'twitter_username' => 'Twitter Username',
 			'icon_url'=> 'Icon URL',
 			'created' => 'Created',
@@ -100,6 +102,7 @@ class Trucks extends CreatedModifiedActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('twitter_id',$this->twitter_id,true);
+		$criteria->compare('twitter_account_id',$this->twitter_account_id,true);
 		$criteria->compare('twitter_username',$this->twitter_username,true);
 		$criteria->compare('icon_url',$this->icon_url,true);
 		$criteria->compare('created',$this->created,true);

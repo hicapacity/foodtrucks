@@ -22,3 +22,7 @@ class Api
 			success: on_success
 		$.ajax opts
 
+root = exports ? @
+unless root.foodtruckapp
+	root.foodtruckapp = {}
+root.foodtruckapp.Api = Api

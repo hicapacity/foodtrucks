@@ -95,6 +95,7 @@ if ($_SERVER['HTTP_HOST'] === 'www.streetgrindz.com' || $_SERVER['HTTP_HOST'] ==
     $settingsMain['components']['log']['routes'][] =
     array(
         'class' => 'CWebLogRoute',
+        //'levels' => 'trace, info, error, warning',
         'levels' => 'error, warning',
     );
     $settingsMain['modules']['gii'] =

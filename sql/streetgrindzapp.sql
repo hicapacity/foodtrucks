@@ -24,14 +24,17 @@ DROP TABLE IF EXISTS `trucks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trucks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `twitter_id` bigint(20) unsigned NOT NULL,
+  `twitter_account_id` int(11) NOT NULL,
+  `twitter_id` int(10) unsigned NOT NULL,
   `twitter_username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `icon_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `twitter_id` (`twitter_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `twitter_id` (`twitter_id`),
+  KEY `twitter_account_id` (`twitter_account_id`),
+  CONSTRAINT `trucks_ibfk_1` FOREIGN KEY (`twitter_account_id`) REFERENCES `twitter_accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +43,7 @@ CREATE TABLE `trucks` (
 
 LOCK TABLES `trucks` WRITE;
 /*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
-INSERT INTO `trucks` VALUES (1,9491862,'austenito','http://google.com/insert_here','2011-05-29 03:48:55','2011-05-29 03:48:55'),(2,31680416,'Jason Axelson','http://google.com/insert_here','2011-06-04 22:26:45','2011-06-04 22:26:45');
+INSERT INTO `trucks` VALUES (3,4,31680416,'bostonvaulter','http://google.com/insert_here','2011-06-13 05:08:11','2011-06-13 05:08:11'),(4,2,9491862,'austenito','http://google.com/insert_here','2011-06-13 05:08:12','2011-06-13 05:08:12');
 /*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,8 +68,8 @@ CREATE TABLE `trucks_tweets` (
   UNIQUE KEY `tweet_id` (`tweet_id`),
   KEY `truck_id_created` (`truck_id`,`created`),
   KEY `truck_id` (`truck_id`),
-  CONSTRAINT `trucks_tweets_ibfk_1` FOREIGN KEY (`truck_id`) REFERENCES `trucks` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  CONSTRAINT `trucks_tweets_ibfk_1` FOREIGN KEY (`truck_id`) REFERENCES `trucks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +78,7 @@ CREATE TABLE `trucks_tweets` (
 
 LOCK TABLES `trucks_tweets` WRITE;
 /*!40000 ALTER TABLE `trucks_tweets` DISABLE KEYS */;
-INSERT INTO `trucks_tweets` VALUES (1,1,74594859209592832,'@streetgrindzapp parse me',NULL,21.292,-157.85,'2011-05-29 03:48:55','2011-05-29 03:48:55'),(2,2,77130658920673280,'@streetgrindzapp hope this has location',NULL,21.2927,-157.793,'2011-06-04 22:26:45','2011-06-04 22:26:45');
+INSERT INTO `trucks_tweets` VALUES (3,3,77130658920673280,'@streetgrindzapp hope this has location',NULL,21.2927,-157.793,'2011-06-13 05:08:11','2011-06-13 05:08:11'),(4,4,74594859209592832,'@streetgrindzapp parse me',NULL,21.292,-157.85,'2011-06-13 05:08:12','2011-06-13 05:08:12');
 /*!40000 ALTER TABLE `trucks_tweets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,6 +93,7 @@ CREATE TABLE `twitter_accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `twitter_id` bigint(20) NOT NULL,
   `twitter_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `truck_info` text COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -102,7 +106,7 @@ CREATE TABLE `twitter_accounts` (
 
 LOCK TABLES `twitter_accounts` WRITE;
 /*!40000 ALTER TABLE `twitter_accounts` DISABLE KEYS */;
-INSERT INTO `twitter_accounts` VALUES (2,9491862,'test','2011-06-05 12:16:38','2011-06-05 12:36:01'),(3,178426199,'test2','2011-06-05 02:48:00','2011-06-05 02:48:00'),(4,31680416,'test3','2011-06-05 02:48:00','2011-06-05 02:48:00');
+INSERT INTO `twitter_accounts` VALUES (2,9491862,'someone','Test 1234','2011-06-05 12:16:38','2011-06-13 05:13:32'),(3,178426199,'test2','asf','2011-06-05 02:48:00','2011-06-13 05:13:24'),(4,31680416,'test3','Tester Yay','2011-06-05 02:48:00','2011-06-13 05:13:40');
 /*!40000 ALTER TABLE `twitter_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -115,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-05  2:50:43
+-- Dump completed on 2011-06-12 19:15:26

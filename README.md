@@ -80,6 +80,8 @@ Finally, after you have added some twitter accounts, please run from root/protec
 
 ``./yiic queryfoodtruck``
 
+If you are running in a production environment, set the URL in web/index.php and in config/main.php
+
 Block Diagram
 =============
 

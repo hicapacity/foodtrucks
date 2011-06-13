@@ -9,18 +9,17 @@ class TwitterHelper
     /**
      * Return true if the tweet is trackable, false otherwise
      */
-    public static function isTrackable($tweet) {
+    public static function getTwitterAccount($tweet) {
         try {
             $twitter_id = $tweet->user->id_str;
             $twitter_name = $tweet->user->screen_name;
-            $twitterAccts = TwitterAccounts::model()->findAll();
-            $ids = array();
-            $names = array();
-            foreach ($twitterAccts as $acct) {
-                $ids[] = $acct->twitter_id;
-                $names[] = $acct->twitter_name;
-            }
-            return in_array($twitter_id, $ids) || in_array($twitter_name,$names);
+            $criteria=new CDbCriteria;
+            $criteria->select = 'id';
+            $criteria->condition = 'twitter_id = :twitter_id OR twitter_name = :twitter_name';
+            $criteria->params = array(':twitter_id'=>$twitter_id, ':twitter_name'=>$twitter_name);
+            $criteria->limit = 1;
+			$model = TwitterAccounts::model()->find($criteria);
+            return (null !== $model)?$model:false;
         } catch (Exception $e) {
             return false;
         }
