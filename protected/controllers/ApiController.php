@@ -1,8 +1,4 @@
 <?php
-/*
-NOTE:
-Routes are done in config.php.  If you need to add more api functions, you need to map them there.
-*/
 class ApiController extends Controller
 {
 	/**
@@ -27,20 +23,15 @@ class ApiController extends Controller
 	 */
 	public function actionTrucks()
 	{
-		$trucksObj = Trucks::model()->with('trucksTweets:coords',
-				'twitterAccount')->findAll();
-		$trucks = array();
-		foreach ($trucksObj as $truck) {
-			$this->_truck($trucks,$truck,false);
-		}
-		if (count($trucks)==0) {
-			$this->sendJsonResponse(Array(
-				'status'=>'fail',
-				'data'=>'No Trucks Found!'));
-		} else {
+		$trucks = Trucks::get_all_located_trucks();
+		if (count($trucks)) {
 			$this->sendJsonResponse(Array(
 				'status'=>'success',
 				'data'=>$trucks));
+		}else{
+			$this->sendJsonResponse(Array(
+				'status'=>'fail',
+				'data'=>'No Trucks Found!'));
 		}
 	}
 
@@ -48,42 +39,18 @@ class ApiController extends Controller
 	 * Find a single truck based on their primary key!
 	 */
 	public function actionTruck($id){
-		$id = (int)$id;
-		$truck = Trucks::model()->with('trucksTweets:coords',
-			'twitterAccount')->find(array(
-				'condition'=>'t.id=:id',
-				'params'=>array(':id'=>$id),
-			));
-		$trucks = array();
-		if (NULL !== $truck) {
-			$this->_truck($trucks,$truck);
+		$truck = Trucks::get_truck_by_id($id);
+		if (count($truck)){
 			$this->sendJsonResponse(Array(
 				'status'=>'success',
 				'data'=>$trucks));
-		} else {
+		}else{
 			$this->sendJsonResponse(Array(
 				'status'=>'fail',
 				'data'=>'This truck does not exist..'));
 		}
 	}
 	
-	function _truck(&$trucks,$truck,$noTweets=true) {
-		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)>0) {
-			$tweet = $truck->trucksTweets[0];	
-			$trucks[] = Array(
-				"id"=>$truck->id,
-				"lat"=>$tweet->geo_lat,
-				"lng"=>$tweet->geo_long,
-				"name"=>$truck->twitter_username,
-				"info"=>$truck->twitterAccount->truck_info,
-			);
-		} else if ($noTweets) {
-			$this->sendJsonResponse(Array(
-				'status'=>'fail',
-				'data'=>'This truck has no tweets!'));
-		}
-	}
-
 	/**
 	 * This is the action to handle external exceptions.
 	 */

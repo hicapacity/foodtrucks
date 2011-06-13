@@ -112,4 +112,61 @@ class Trucks extends CreatedModifiedActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+  /**
+   * Get all trucks
+	 */
+	public static function get_all_trucks(){
+		$trucksObj = Trucks::model()->with('trucksTweets:coords',
+				'twitterAccount')->findAll();
+
+		$ret = array();
+		foreach ($trucksObj as $truck){
+			$ret[] = Trucks::obj_to_array($truck);
+		}
+		return $ret;
+	}
+
+	/**
+	 * Finds all trucks that have tweeted to us and their geo coords
+	 */
+	public static function get_all_located_trucks(){
+		$trucks = Trucks::get_all_trucks();
+		return array_filter($trucks, array('Trucks', 'has_geo'));
+	}
+
+	/**
+	 * Find a single truck based on their primary key!
+	 */
+	public static function get_truck_by_id($id){
+		$id = (int)$id;
+		$truck = Trucks::model()->with('trucksTweets:coords',
+			'twitterAccount')->find(array(
+				'condition'=>'t.id=:id',
+				'params'=>array(':id'=>$id),
+			));
+		$ret = array();
+		if ($truck !== NULL){
+			$ret[] = Trucks::obj_to_array($truck);
+		}
+		return $ret;
+	}
+
+	public static function has_geo($truck){
+		return isset($truck['lat']);
+	}
+
+	public static function obj_to_array($truck){
+		$ret = Array(
+			"id" => $truck->id,
+			"name" => $truck->twitter_username,
+			"info" => $truck->twitterAccount->truck_info,
+		);
+		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){
+			$tweet = $truck->trucksTweets[0];
+			$ret['lat'] = $tweet->geo_lat;
+			$ret['lng'] = $tweet->geo_long;
+		}
+		return $ret;
+	}
 }
