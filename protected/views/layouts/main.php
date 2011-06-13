@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-	<link rel="shortcut icon" href="/images/favicon.ico" />
+	<link rel="shortcut icon" href="images/favicon.ico" />
 
   <!-- FOODTRUCK SPECIFIC STUFF -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
