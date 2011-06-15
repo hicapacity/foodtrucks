@@ -25,7 +25,7 @@
 		<ul data-role="listview" data-inset="true">
 			<li><a href="#" id="foodtrucks_load_nearest">Find Nearest</a></li>
 			<li><a href="#" id="foodtrucks_load_nearest">Find Nearest</a></li>
-			<li><a href="/site/page?view=about" id="foodtrucks_load_nearest">Info</a></li>
+			<li><?php echo CHtml::link('Info', array('site/page','view'=>'about'),array('id'=>'foodtrucks_load_nearest')); ?>
 		</ul>
 		</div>
 	</div>
