@@ -21,7 +21,7 @@ class Truck
 
 	info_content: () ->
 		$ret = $ '<div>'
-		$ret.html '<h2>' + @data.info + '</h2><p>Stuff stuff Stuff</p>'
+		$ret.html '<h2>' + @data.name + '</h2><p>' + @data.info + '</p>'
 		$container = $ '<div>'
 		$container.css {width: '100%'}
 		$prev = $ '<a>', {
