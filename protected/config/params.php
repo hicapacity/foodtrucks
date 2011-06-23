@@ -7,6 +7,7 @@ return array(
     'poweredByUrl'=>'http://hicapacity.org',
     'adminEmail'=>'maker@hicapacity.org',
     'contactEmail'=>'maker@hicapacity.org',
+    'analytics'=>'UA-22988834-2',
 
     //TODO - CHANGE THIS from 'trucks' to something more generic
     //maybe change it to something like 'credentials'
@@ -15,7 +16,7 @@ return array(
     //TODO - MOVE THIS to the above include file after you rename it.
     'adminAccounts'=>array(
         // username => password
-        'streetgrindzuser' => 'yes!!FT',
+        'streetgrindzuser' => 'dev',
         'a130%_!#35i350' => 'mbdp109!25_@',
     ),
 
