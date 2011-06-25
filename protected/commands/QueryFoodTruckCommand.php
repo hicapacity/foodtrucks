@@ -25,7 +25,9 @@ class QueryFoodTruckCommand extends CConsoleCommand
             Yii::app()->params['trucks']['twitter']['oauthAccessTokenSecret']);
 
         $mentions = $this->connection->get('statuses/mentions');
+
         $num_mentions = count($mentions);
+
         for ($i = 0; $i < $num_mentions; $i++)
         {
             $mention = $mentions[$i];
@@ -34,36 +36,50 @@ class QueryFoodTruckCommand extends CConsoleCommand
                 TwitterHelper::isGeoLocatable($mention)) {
 
                 $twitter_id = $mention->user->id_str;
-                echo 'Valid tweet found for: '. $mention->user->screen_name . "\n";
-                // TODO: We don't like this. Helper to get_or_insert
+
                 $truck = Trucks::model()->findByAttributes(
                     array('twitter_id' => $twitter_id));
+
                 if (NULL === $truck)
                 {
                     $truck = new Trucks;
                     $truck->twitter_id = $twitter_id;
                     $truck->twitter_username = $mention->user->screen_name;
                     $truck->twitter_account_id = $twitterAccount->id;
-                    if ($truck->validate()) {
+                    if ($truck->validate()) 
+                    {
                         $truck->save();
-                    } else {
-                        echo 'New Truck Twitter Count Inserion Failed: '.$mention->user->name."\n";
+                    } 
+                    else 
+                    {
+                        echo 'New Truck Twitter Count Insertion Failed: '.$mention->user->name."\n";
                         // TODO: Put something on stderr so cron can pick it up
                     }
                 }
-
-                $truck_tweet = TrucksTweets::model()->findByAttributes(
-                    array('tweet_id' => $mention->id_str));
-
-                if (NULL === $truck_tweet)
+                
+                if (TwitterHelper::isValidFormat($mention))
                 {
-                    $truck_tweet = new TrucksTweets;
-                    $truck_tweet->truck_id = $truck->id;
-                    $truck_tweet->tweet    = $mention->text;
-                    $truck_tweet->tweet_id = $mention->id_str;
-                    $truck_tweet->geo_lat  = $mention->coordinates->coordinates[1];
-                    $truck_tweet->geo_long = $mention->coordinates->coordinates[0];
-                    $truck_tweet->save();
+                    Yii::log("Tweet is valid. Checking for db insertion", 'info', get_called_class());
+
+                    $truck_tweet = TrucksTweets::model()->findByAttributes(
+                        array('tweet_id' => $mention->id_str));
+
+                    if (NULL === $truck_tweet)
+                    {
+                        $truck_tweet = new TrucksTweets;
+                        $truck_tweet->truck_id = $truck->id;
+                        $truck_tweet->tweet    = $mention->text;
+                        $truck_tweet->tweet_id = $mention->id_str;
+                        $truck_tweet->geo_lat  = $mention->coordinates->coordinates[1];
+                        $truck_tweet->geo_long = $mention->coordinates->coordinates[0];
+                        $truck_tweet->save();
+                    }
+                    else
+                    {
+                        $message = 'Tweet (id=' . $mention->id_str . ") already exists. Skipping.\n";
+                        Yii::log($message, 'info', get_called_class());
+                        echo $message;
+                    }
                 }
             } else {
                 echo 'Bad Tweeter: '.$mention->user->screen_name.$mention->text."\n";                
