@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.7.1 (i386)
 --
 -- Host: localhost    Database: streetgrindzapp
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.10-log
+-- Server version	5.1.57
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,7 +34,7 @@ CREATE TABLE `trucks` (
   UNIQUE KEY `twitter_id` (`twitter_id`),
   KEY `twitter_account_id` (`twitter_account_id`),
   CONSTRAINT `trucks_ibfk_1` FOREIGN KEY (`twitter_account_id`) REFERENCES `twitter_accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `trucks` (
 
 LOCK TABLES `trucks` WRITE;
 /*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
-INSERT INTO `trucks` VALUES (3,4,31680416,'bostonvaulter','http://google.com/insert_here','2011-06-13 05:08:11','2011-06-13 05:08:11'),(4,2,9491862,'austenito','http://google.com/insert_here','2011-06-13 05:08:12','2011-06-13 05:08:12');
 /*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +68,7 @@ CREATE TABLE `trucks_tweets` (
   KEY `truck_id_created` (`truck_id`,`created`),
   KEY `truck_id` (`truck_id`),
   CONSTRAINT `trucks_tweets_ibfk_1` FOREIGN KEY (`truck_id`) REFERENCES `trucks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +77,6 @@ CREATE TABLE `trucks_tweets` (
 
 LOCK TABLES `trucks_tweets` WRITE;
 /*!40000 ALTER TABLE `trucks_tweets` DISABLE KEYS */;
-INSERT INTO `trucks_tweets` VALUES (3,3,77130658920673280,'@streetgrindzapp hope this has location',NULL,21.2927,-157.793,'2011-06-13 05:08:11','2011-06-13 05:08:11'),(4,4,74594859209592832,'@streetgrindzapp parse me',NULL,21.292,-157.85,'2011-06-13 05:08:12','2011-06-13 05:08:12');
 /*!40000 ALTER TABLE `trucks_tweets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +95,7 @@ CREATE TABLE `twitter_accounts` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +104,7 @@ CREATE TABLE `twitter_accounts` (
 
 LOCK TABLES `twitter_accounts` WRITE;
 /*!40000 ALTER TABLE `twitter_accounts` DISABLE KEYS */;
-INSERT INTO `twitter_accounts` VALUES (2,9491862,'someone','Test 1234','2011-06-05 12:16:38','2011-06-13 05:13:32'),(3,178426199,'test2','asf','2011-06-05 02:48:00','2011-06-13 05:13:24'),(4,31680416,'test3','Tester Yay','2011-06-05 02:48:00','2011-06-13 05:13:40');
+INSERT INTO `twitter_accounts` VALUES (1,31680416,'@bostonvaulter','Test Account','2011-06-25 19:36:15','2011-06-25 19:36:15'),(5,199785206,'@xtremetacos','Tacos','2011-06-25 19:36:15','2011-06-25 19:36:15'),(6,219380743,'@FAIRYCAKES808','Fairy Cakes','2011-06-25 19:36:49','2011-06-25 19:36:49'),(7,275837179,'@tikitruck','Tiki Truck!','2011-06-25 19:37:27','2011-06-25 19:37:27'),(8,79702930,'@fliptouteats','Filipino Eats!','2011-06-25 19:38:02','2011-06-25 19:38:02'),(9,228279591,'@camillesonwheel','Camille','2011-06-25 19:38:27','2011-06-25 19:38:27');
 /*!40000 ALTER TABLE `twitter_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -119,4 +117,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-12 19:15:26
+-- Dump completed on 2011-06-25  9:41:45
