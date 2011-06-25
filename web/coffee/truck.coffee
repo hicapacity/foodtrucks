@@ -13,7 +13,7 @@ class Truck
 		google.maps.event.addListener @marker, 'click', @on_click
 
 	get_icon: () ->
-		"images/StreetgrindzLogo.png"
+		"images/StreetgrindzMapLogo.png"
 
 	on_click: () =>
 		@app.info_window.setContent @info_content()
