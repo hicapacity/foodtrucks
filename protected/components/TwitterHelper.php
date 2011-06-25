@@ -46,6 +46,21 @@ class TwitterHelper
      * Returns true if tweet is in valid format (@streetgrindzapp <menu image url> <open time>-<close time>)
      */
     public static function isValidFormat($tweet) {
-        return true;
+        try {
+            $tweet_text = $tweet->text;
+            $matches = TwitterHelper::parseTruckTweet($tweet_text);
+            return ($matches) ? true : false;
+        } 
+        catch (Exception $e) 
+        {
+            Yii::log("Exception occurred parsing Tweet format:" . $e, 
+                     'error', get_called_class());
+            return false;
+        }
+    }
+
+    public static function parseTruckTweet($tweet_text) {
+        preg_match('/^@streetgrindzapp\s+(?P<menu>http:\/\/.*)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches);
+        return $matches;
     }
 }

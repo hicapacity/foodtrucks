@@ -54,6 +54,7 @@ class QueryFoodTruckCommand extends CConsoleCommand
                     {
                         echo 'New Truck Twitter Count Insertion Failed: '.$mention->user->name."\n";
                         // TODO: Put something on stderr so cron can pick it up
+                        // Are you redirecting stderr to stdout? Cron should pick this up by default
                     }
                 }
                 
@@ -81,8 +82,14 @@ class QueryFoodTruckCommand extends CConsoleCommand
                         echo $message;
                     }
                 }
+                else
+                {
+                    $message = 'Tweet (text=' . $mention->text . ") invalid format. Skipping.\n";
+                    Yii::log($message, 'info', get_called_class());
+                    echo $message;
+                }
             } else {
-                echo 'Bad Tweeter: '.$mention->user->screen_name.$mention->text."\n";                
+                echo 'Bad Tweeter: '.$mention->user->screen_name.' '.$mention->text."\n";                
             }
         }
     }
