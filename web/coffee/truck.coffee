@@ -20,6 +20,9 @@ class Truck
 		@app.info_window.open @app.gmap, @marker
 
 	info_content: () ->
+		$icon = $ '<img>', {
+            src: @data.icon_url,     
+        }
 		$ret = $ '<div>'
 		$ret.html '<h2>' + @data.name + '</h2><p>' + @data.info + '</p>'
 		$container = $ '<div>'
@@ -54,7 +57,7 @@ class Truck
 		$next.click (e) =>
 			@app.open_truck @id+1
 			false
-		$container.append $prev, $more_info, $next
+		$container.append $prev, $more_info, $next, $icon
 		$ret.append $container
 		$ret[0]
 

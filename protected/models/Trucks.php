@@ -197,6 +197,7 @@ class Trucks extends CreatedModifiedActiveRecord
 			"id" => $truck->id,
 			"name" => $truck->twitter_username,
 			"info" => $truck->twitterAccount->truck_info,
+            "icon_url" => $truck->icon_url,
 		);
 		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){
 			$tweet = $truck->trucksTweets[0];
