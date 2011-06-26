@@ -93,6 +93,8 @@ class TrucksTweets extends CreatedModifiedActiveRecord
 			'tweet_id' => 'Tweet Id',
 			'tweet' => 'Tweet',
 			'photo_url' => 'Photo URL',
+			'start_time' => 'Start Time',
+			'end_time' => 'End Time',
 			'geo_lat' => 'Geo Lat',
 			'geo_long' => 'Geo Long',
 			'created' => 'Created',

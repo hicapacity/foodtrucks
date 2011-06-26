@@ -59,6 +59,8 @@ CREATE TABLE `trucks_tweets` (
   `tweet_id` bigint(20) unsigned NOT NULL,
   `tweet` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `photo_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   `geo_lat` float NOT NULL,
   `geo_long` float NOT NULL,
   `created` datetime NOT NULL,

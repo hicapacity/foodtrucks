@@ -60,7 +60,13 @@ class TwitterHelper
     }
 
     public static function parseTruckTweet($tweet_text) {
-        preg_match('/^@streetgrindzapp\s+(?P<menu>http:\/\/.*)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches);
+        preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches);
         return $matches;
+    }
+
+    // TODO: Need to implement how to convert the tweet created time and the hours to something MySQL likeys
+    public static function convertTruckTime($tweet_time, $hour)
+    {
+        return getdate();
     }
 }

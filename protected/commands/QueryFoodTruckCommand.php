@@ -35,27 +35,12 @@ class QueryFoodTruckCommand extends CConsoleCommand
             if (false !== $twitterAccount &&
                 TwitterHelper::isGeoLocatable($mention)) {
 
-                $twitter_id = $mention->user->id_str;
+                $truck = Trucks::model()->get_or_insert_truck(
+                    $twitterAccount, $mention);
 
-                $truck = Trucks::model()->findByAttributes(
-                    array('twitter_id' => $twitter_id));
-
-                if (NULL === $truck)
+                if (!$truck)
                 {
-                    $truck = new Trucks;
-                    $truck->twitter_id = $twitter_id;
-                    $truck->twitter_username = $mention->user->screen_name;
-                    $truck->twitter_account_id = $twitterAccount->id;
-                    if ($truck->validate()) 
-                    {
-                        $truck->save();
-                    } 
-                    else 
-                    {
-                        echo 'New Truck Twitter Count Insertion Failed: '.$mention->user->name."\n";
-                        // TODO: Put something on stderr so cron can pick it up
-                        // Are you redirecting stderr to stdout? Cron should pick this up by default
-                    }
+                    echo 'New Truck Twitter Count Insertion Failed: '.$mention->user->name."\n";
                 }
                 
                 if (TwitterHelper::isValidFormat($mention))
@@ -67,12 +52,20 @@ class QueryFoodTruckCommand extends CConsoleCommand
 
                     if (NULL === $truck_tweet)
                     {
+
+                        $parsed_tweet = TwitterHelper::parseTruckTweet($mention->text);
+
                         $truck_tweet = new TrucksTweets;
-                        $truck_tweet->truck_id = $truck->id;
-                        $truck_tweet->tweet    = $mention->text;
-                        $truck_tweet->tweet_id = $mention->id_str;
-                        $truck_tweet->geo_lat  = $mention->coordinates->coordinates[1];
-                        $truck_tweet->geo_long = $mention->coordinates->coordinates[0];
+                        $truck_tweet->truck_id   = $truck->id;
+                        $truck_tweet->tweet      = $mention->text;
+                        $truck_tweet->tweet_id   = $mention->id_str;
+                        $truck_tweet->photo_url  = $parsed_tweet['menu_url'];
+                        $truck_tweet->start_time = TwitterHelper::convertTruckTime($mention->created_at, 
+                            $parsed_tweet['start']);
+                        $truck_tweet->end_time   =  TwitterHelper::convertTruckTime($mention->created_at, 
+                            $parsed_tweet['end']);
+                        $truck_tweet->geo_lat    = $mention->coordinates->coordinates[1];
+                        $truck_tweet->geo_long   = $mention->coordinates->coordinates[0];
                         $truck_tweet->save();
                     }
                     else

@@ -113,6 +113,42 @@ class Trucks extends CreatedModifiedActiveRecord
 		));
 	}
 
+    # TODO: I don't like this, should raise exception, but just getting to work now.
+    public static function get_or_insert_truck($account, $mention)
+    {
+        if ($account and $mention)
+        {
+            $truck = Trucks::model()->findByAttributes(
+                array('twitter_id' => $mention->user->id_str));
+
+            return (NULL === $truck) ?
+                Trucks::model()->insert_truck_from_tweet($account, $mention) :
+                $truck;
+        }
+        return false;
+    }
+
+    # TODO: I don't like this either, should probably come from twitteraccounts, but just getting to work now.
+    protected static function insert_truck_from_tweet($account, $mention)
+    {
+        if ($account and $mention)
+        {
+            $truck = new Trucks;
+            $truck->twitter_id = $mention->user->id;
+            $truck->twitter_username = $mention->user->screen_name;
+            $truck->twitter_account_id = $account->id;
+            $truck->icon_url = $mention->user->profile_image_url;
+            if ($truck->validate()) 
+            {
+                if ($truck->save()) 
+                {
+                    return $truck;
+                }
+            } 
+        }
+        return false;
+    }
+
   /**
    * Get all trucks
 	 */
