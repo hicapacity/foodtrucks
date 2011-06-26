@@ -149,8 +149,8 @@ class Trucks extends CreatedModifiedActiveRecord
         return false;
     }
 
-  /**
-   * Get all trucks
+    /**
+     * Get all trucks
 	 */
 	public static function get_all_trucks(){
 		$trucksObj = Trucks::model()->with('trucksTweets:coords',
@@ -200,8 +200,11 @@ class Trucks extends CreatedModifiedActiveRecord
 		);
 		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){
 			$tweet = $truck->trucksTweets[0];
-			$ret['lat'] = $tweet->geo_lat;
-			$ret['lng'] = $tweet->geo_long;
+			$ret['lat']     = $tweet->geo_lat;
+			$ret['lng']     = $tweet->geo_long;
+			$ret['start']   = $tweet->start_time;
+			$ret['end']     = $tweet->end_time;
+			$ret['img_url'] = $tweet->photo_url;
 		}
 		return $ret;
 	}
