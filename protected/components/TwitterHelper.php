@@ -64,9 +64,18 @@ class TwitterHelper
         return $matches;
     }
 
-    // TODO: Need to implement how to convert the tweet created time and the hours to something MySQL likeys
-    public static function convertTruckTime($tweet_time, $hour)
+    /** 
+     * Take tweet time -> converts tweet to timezone, sets the hour/min/secs, converts back to UTC for db
+     */
+    public static function convertTruckTime($tweet_time, $hour, $minutes=0, $seconds=0, $timezone='HST')
     {
-        return getdate();
+        $tweet_datetime = DateTime::createFromFormat('D M j G:i:s +0000 Y', $tweet_time);
+        $hst = new DateTimeZone($timezone);
+        $tweet_datetime->setTimezone($hst);
+        $tweet_datetime->setTime($hour, $minutes, $seconds);
+
+        $utc = new DateTimeZone('UTC');
+        $tweet_datetime->setTimezone($utc);
+        return $tweet_datetime->format('Y-m-d G:i:s');
     }
 }
