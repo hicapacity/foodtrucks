@@ -26,7 +26,7 @@
 </head>
 <body>
 <noscript>
-Javascript is required to view this page
+Javascript is required to view this page correctly. Please enable javascript in your browser. Here is a <a href="http://www.google.com/adsense/support/bin/answer.py?answer=12654">guide to enable JavaScript</a>.
 </noscript>
 	<?php echo $content; ?>
 <script type="text/javascript">
