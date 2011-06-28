@@ -26,7 +26,15 @@
 </head>
 <body>
 <noscript>
+<h1>Error! Javascript is required to view this page correctly</h1>
 Javascript is required to view this page correctly. Please enable javascript in your browser. Here is a <a href="http://www.google.com/adsense/support/bin/answer.py?answer=12654">guide to enable JavaScript</a>.
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 </noscript>
 	<?php echo $content; ?>
 <script type="text/javascript">
