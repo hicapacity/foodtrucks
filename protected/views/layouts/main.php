@@ -25,6 +25,9 @@
 
 </head>
 <body>
+<noscript>
+Javascript is required to view this page
+</noscript>
 	<?php echo $content; ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
