@@ -28,6 +28,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'name'); ?>
+		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->error($model,'name'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'info'); ?>
 		<?php echo $form->textArea($model,'info',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'info'); ?>

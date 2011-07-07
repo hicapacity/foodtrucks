@@ -27,6 +27,7 @@ CREATE TABLE `trucks` (
   `twitter_id` int(10) unsigned NOT NULL,
   `twitter_username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `icon_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `info` text COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
@@ -41,7 +42,14 @@ CREATE TABLE `trucks` (
 
 LOCK TABLES `trucks` WRITE;
 /*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
-INSERT INTO `trucks` VALUES (1,31680416,'@bostonvaulter','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(2,92922989,'@808geek','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(3,20360943,'@streetgrindz','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(5,199785206,'@xtremetacos','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(6,219380743,'@FAIRYCAKES808','','','2011-06-25 19:36:49','2011-06-25 19:36:49'),(7,275837179,'@tikitruck','','','2011-06-25 19:37:27','2011-06-25 19:37:27'),(8,79702930,'@fliptouteats','','','2011-06-25 19:38:02','2011-06-25 19:38:02'),(9,228279591,'@camillesonwheel','','','2011-06-25 19:38:27','2011-06-25 19:38:27');
+INSERT INTO `trucks` VALUES (1,31680416,'@bostonvaulter','','Jason Axelson','','2011-06-25 19:36:15','2011-06-25 19:36:15'),
+                            (2,92922989,'@808geek','','Brandon Askew','','2011-06-25 19:36:15','2011-06-25 19:36:15'),
+                            (3,20360943,'@streetgrindz','','Poni Askew','','2011-06-25 19:36:15','2011-06-25 19:36:15'),
+                            (5,199785206,'@xtremetacos','','Extreme Tacos','','2011-06-25 19:36:15','2011-06-25 19:36:15'),
+                            (6,219380743,'@FAIRYCAKES808','','Fairy Cakes','','2011-06-25 19:36:49','2011-06-25 19:36:49'),
+                            (7,275837179,'@tikitruck','','Tiki Truck','','2011-06-25 19:37:27','2011-06-25 19:37:27'),
+                            (8,79702930,'@fliptouteats','','Flipt Out Eats','','2011-06-25 19:38:02','2011-06-25 19:38:02'),
+                            (9,228279591,'@camillesonwheel','','Camilles On Wheels','','2011-06-25 19:38:27','2011-06-25 19:38:27');
 /*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
 UNLOCK TABLES;
 

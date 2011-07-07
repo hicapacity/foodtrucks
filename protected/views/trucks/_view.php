@@ -16,6 +16,10 @@
 	<?php echo CHtml::encode($data->icon_url); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
+    <?php echo CHtml::encode($data->name); ?>
+    <br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('info')); ?>:</b>
     <?php echo CHtml::encode($data->info); ?>
     <br />

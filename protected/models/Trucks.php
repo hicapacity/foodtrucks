@@ -42,13 +42,14 @@ class Trucks extends CreatedModifiedActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('twitter_id, twitter_username, info, created, modified, icon_url', 'required'),
+			array('twitter_id, twitter_username, name, info, created, modified, icon_url', 'required'),
 			array('twitter_id', 'numerical', 'integerOnly'=>true),
 			array('twitter_username', 'length', 'max'=>64),
+			array('name', 'length', 'max'=>64),
 			array('icon_url', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, twitter_id, twitter_username, icon_url, info, created, modified', 'safe', 'on'=>'search'),
+			array('id, twitter_id, twitter_username, icon_url, name, info, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +85,7 @@ class Trucks extends CreatedModifiedActiveRecord
 			'twitter_id' => 'Twitter Id',
 			'twitter_username' => 'Twitter Username',
 			'icon_url'=> 'Icon URL',
+			'name'=> 'Truck Name',
 			'info'=> 'Truck Info',
 			'created' => 'Created',
 			'modified' => 'Modified',
@@ -105,6 +107,8 @@ class Trucks extends CreatedModifiedActiveRecord
 		$criteria->compare('twitter_id',$this->twitter_id,true);
 		$criteria->compare('twitter_username',$this->twitter_username,true);
 		$criteria->compare('icon_url',$this->icon_url,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('info',$this->info,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('modified',$this->modified,true);
 
@@ -178,7 +182,8 @@ class Trucks extends CreatedModifiedActiveRecord
 	public static function obj_to_array($truck){
 		$ret = Array(
 			"id" => $truck->id,
-			"name" => $truck->twitter_username,
+			"twitter_username" => $truck->twitter_username,
+			"name" => $truck->name,
 			"info" => $truck->info,
             "icon_url" => $truck->icon_url,
 		);

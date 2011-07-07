@@ -12,17 +12,22 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'twitter_id'); ?>
-		<?php echo $form->textField($model,'twitter_id',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->textField($model,'twitter_id',array('size'=>20,'maxlength'=>20)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'twitter_username'); ?>
-		<?php echo $form->textField($model,'twitter_username',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textField($model,'twitter_username',array('size'=>60,'maxlength'=>64)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'icon_url'); ?>
 		<?php echo $form->textField($model,'icon_url',array('size'=>20,'maxlength'=>256)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'name'); ?>
+		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>64)); ?>
 	</div>
 
 	<div class="row">

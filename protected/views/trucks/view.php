@@ -22,6 +22,7 @@ $this->menu=array(
 		'twitter_id',
 		'twitter_username',
 		'icon_url',		
+		'name',		
 		'info',		
 		'created',
 		'modified',

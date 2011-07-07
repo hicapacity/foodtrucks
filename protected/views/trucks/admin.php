@@ -46,6 +46,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'twitter_id',
 		'twitter_username',
 		'icon_url',
+        'name',
 		'info',
 		'created',
 		'modified',
