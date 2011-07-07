@@ -117,7 +117,8 @@ class Trucks extends CreatedModifiedActiveRecord
      * Get all trucks
 	 */
 	public static function get_all_trucks(){
-		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
+		$trucksObj = Trucks::model()->with(array(
+           'trucksTweets:coords'=>array('order'=>'trucksTweets.id DESC')))->findAll();
 
 		$ret = array();
 		foreach ($trucksObj as $truck){
@@ -132,6 +133,14 @@ class Trucks extends CreatedModifiedActiveRecord
 	public static function get_all_located_trucks(){
 		$trucks = Trucks::get_all_trucks();
 		return array_filter($trucks, array('Trucks', 'has_geo'));
+	}
+
+	/**
+	 * Finds all open trucks that have tweeted to us and their geo coords
+	 */
+	public static function get_all_open_and_located_trucks(){
+		$trucks = Trucks::get_all_located_trucks();
+		return array_filter($trucks, array('Trucks', 'is_open'));
 	}
 
 	/**
@@ -154,6 +163,18 @@ class Trucks extends CreatedModifiedActiveRecord
 		return isset($truck['lat']);
 	}
 
+	public static function is_open($truck){
+        $utc = new DateTimeZone('UTC');
+        $tweet_starttime = DateTime::createFromFormat('Y-m-d G:i:s', 
+            $truck['start'], $utc);
+
+        $tweet_endtime = DateTime::createFromFormat('Y-m-d G:i:s', 
+            $truck['end'], $utc);
+
+        $now = time();
+        return ($now >= $tweet_starttime->getTimestamp()) && ($tweet_endtime->getTimestamp() >= $now);
+	}
+
 	public static function obj_to_array($truck){
 		$ret = Array(
 			"id" => $truck->id,
@@ -161,13 +182,16 @@ class Trucks extends CreatedModifiedActiveRecord
 			"info" => $truck->info,
             "icon_url" => $truck->icon_url,
 		);
+
+        // This is only grabbing the last Truck tweet
 		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){
 			$tweet = $truck->trucksTweets[0];
-			$ret['lat']     = $tweet->geo_lat;
-			$ret['lng']     = $tweet->geo_long;
-			$ret['start']   = $tweet->start_time;
-			$ret['end']     = $tweet->end_time;
-			$ret['menu_url'] = $tweet->menu_url;
+
+            $ret['lat']     = $tweet->geo_lat;
+            $ret['lng']     = $tweet->geo_long;
+            $ret['start']   = $tweet->start_time;
+            $ret['end']     = $tweet->end_time;
+            $ret['menu_url'] = $tweet->menu_url;
 		}
 		return $ret;
 	}

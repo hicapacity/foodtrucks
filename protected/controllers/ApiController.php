@@ -19,11 +19,11 @@ class ApiController extends Controller
 	}
 
 	/**
-	 * Finds all trucks that have tweeted to us and their geo coords
+	 * Finds all open trucks that have tweeted to us and their geo coords
 	 */
 	public function actionTrucks()
 	{
-		$trucks = Trucks::get_all_located_trucks();
+		$trucks = Trucks::get_all_open_and_located_trucks();
 		if (count($trucks)) {
 			$this->sendJsonResponse(Array(
 				'status'=>'success',

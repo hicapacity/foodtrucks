@@ -42,15 +42,15 @@ class TwitterHelper
     /** 
      * Take tweet time -> converts tweet to timezone, sets the hour/min/secs, converts back to UTC for db
      */
-    public static function convertTruckTime($tweet_time, $hour, $minutes=0, $seconds=0, $timezone='HST')
+    public static function convertTruckTime($tweet_time, $hour, $minutes=0, $seconds=0, $timezone='Pacific/Honolulu')
     {
-        $tweet_datetime = DateTime::createFromFormat('D M j G:i:s +0000 Y', $tweet_time);
+        $utc = new DateTimeZone('UTC');
+        $tweet_datetime = DateTime::createFromFormat('D M j G:i:s +0000 Y', $tweet_time, $utc);
         $hst = new DateTimeZone($timezone);
         $tweet_datetime->setTimezone($hst);
-        $tweet_datetime->setTime($hour, $minutes, $seconds);
+        $tweet_datetime = $tweet_datetime->setTime($hour, $minutes, $seconds);
 
-        $utc = new DateTimeZone('UTC');
-        $tweet_datetime->setTimezone($utc);
+        $tweet_datetime = $tweet_datetime->setTimezone($utc);
         return $tweet_datetime->format('Y-m-d G:i:s');
     }
 }
