@@ -36,9 +36,16 @@ class QueryFoodTruckCommand extends CConsoleCommand
                 array('twitter_id' => $mention->user->id_str)
             );
 
-            if (NULL !== $truck && TwitterHelper::isGeoLocatable($mention)) 
+            if (NULL === $truck)
             {
 
+                $message = 'SKIPPED: Tweet (id=' . $mention->id_str . ') is from an unauthorized Tweeter (@' . $mention->user->screen_name .").\n";
+                Yii::log($message, 'info', get_called_class());
+                echo $message;
+                continue;
+            }
+            elseif (TwitterHelper::isGeoLocatable($mention)) 
+            {
                 if (TwitterHelper::isValidFormat($mention))
                 {
                     Yii::log("Tweet is valid. Checking for db insertion", 'info', get_called_class());
@@ -63,24 +70,33 @@ class QueryFoodTruckCommand extends CConsoleCommand
                         $truck_tweet->geo_lat    = $mention->coordinates->coordinates[1];
                         $truck_tweet->geo_long   = $mention->coordinates->coordinates[0];
                         $truck_tweet->save();
+
+                        $message = 'INSERTED: Tweet (text=' . $mention->text .  ') from @' . $mention->user->screen_name . " successfully saved.\n";
+                        Yii::log($message, 'info', get_called_class());
+                        echo $message;
                     }
                     else
                     {
-                        $message = 'Tweet (id=' . $mention->id_str . ") already exists. Skipping.\n";
+                        $message = 'SKIPPED: Tweet (id=' . $mention->id_str . ") already exists.\n";
                         Yii::log($message, 'info', get_called_class());
                         echo $message;
+                        continue;
                     }
                 }
                 else
                 {
-                    $message = 'Tweet (text=' . $mention->text . ") invalid format. Skipping.\n";
+                    $message = 'SKIPPED: Tweet (text=' . $mention->text . ") is an invalid format.\n";
                     Yii::log($message, 'info', get_called_class());
                     echo $message;
+                    continue;
                 }
             } 
             else 
             {
-                echo 'Bad Tweeter: '.$mention->user->screen_name.' '.$mention->text."\n";                
+                $message = 'SKIPPED: Tweet (text=' . $mention->text . ') from ' .  $mention->user->screen_name . " is not geo-locatable.\n";
+                Yii::log($message, 'info', get_called_class());
+                echo $message;
+                continue;
             }
         }
     }
