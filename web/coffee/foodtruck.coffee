@@ -29,7 +29,7 @@ class Main
 	init_map: (canvas) ->
 		console.log "Map Initialized"
 		my_opts =
-			zoom: 10
+			zoom: 13
 			center: @opts['default_latlng']
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 			disableDefaultUI: true
