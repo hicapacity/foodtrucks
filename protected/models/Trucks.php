@@ -205,7 +205,7 @@ class Trucks extends CreatedModifiedActiveRecord
 			$ret['lng']     = $tweet->geo_long;
 			$ret['start']   = $tweet->start_time;
 			$ret['end']     = $tweet->end_time;
-			$ret['img_url'] = $tweet->photo_url;
+			$ret['menu_url'] = $tweet->menu_url;
 		}
 		return $ret;
 	}

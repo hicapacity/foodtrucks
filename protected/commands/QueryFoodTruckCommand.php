@@ -59,7 +59,7 @@ class QueryFoodTruckCommand extends CConsoleCommand
                         $truck_tweet->truck_id   = $truck->id;
                         $truck_tweet->tweet      = $mention->text;
                         $truck_tweet->tweet_id   = $mention->id_str;
-                        $truck_tweet->photo_url  = $parsed_tweet['menu_url'];
+                        $truck_tweet->menu_url   = $parsed_tweet['menu_url'];
                         $truck_tweet->start_time = TwitterHelper::convertTruckTime($mention->created_at, 
                             $parsed_tweet['start']);
                         $truck_tweet->end_time   =  TwitterHelper::convertTruckTime($mention->created_at, 

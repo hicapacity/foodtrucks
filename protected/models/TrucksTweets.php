@@ -63,10 +63,10 @@ class TrucksTweets extends CreatedModifiedActiveRecord
 			array('truck_id, tweet_id', 'numerical', 'integerOnly'=>true),
 			array('geo_lat, geo_long', 'numerical'),
 			array('tweet', 'length', 'max'=>160),
-			array('photo_url', 'length', 'max'=>256),
+			array('menu_url', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, truck_id, tweet_id, tweet, photo_url, geo_lat, geo_long, created, modified', 'safe', 'on'=>'search'),
+			array('id, truck_id, tweet_id, tweet, menu_url, geo_lat, geo_long, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -92,7 +92,7 @@ class TrucksTweets extends CreatedModifiedActiveRecord
 			'truck_id' => 'Truck',
 			'tweet_id' => 'Tweet Id',
 			'tweet' => 'Tweet',
-			'photo_url' => 'Photo URL',
+			'menu_url' => 'Menu URL',
 			'start_time' => 'Start Time',
 			'end_time' => 'End Time',
 			'geo_lat' => 'Geo Lat',
@@ -117,7 +117,7 @@ class TrucksTweets extends CreatedModifiedActiveRecord
 		$criteria->compare('truck_id',$this->truck_id);
 		$criteria->compare('tweet_id',$this->tweet_id,true);
 		$criteria->compare('tweet',$this->tweet,true);
-		$criteria->compare('photo_url',$this->photo_url,true);
+		$criteria->compare('menu_url',$this->menu_url,true);
 		$criteria->compare('geo_lat',$this->geo_lat);
 		$criteria->compare('geo_long',$this->geo_long);
 		$criteria->compare('created',$this->created,true);
