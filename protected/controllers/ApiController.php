@@ -50,6 +50,17 @@ class ApiController extends Controller
 				'data'=>'This truck does not exist..'));
 		}
 	}
+
+	public function actionInfo(){
+        $info = Array(
+            'streetgrindz_url' => 'http://streetgrindz.com',
+            'streetgrindz_bio' => 'StreetGrindz Rules',
+            'hicapacity_url' => 'http://hicapacity.org'
+        );
+        $this->sendJsonResponse(Array(
+            'status'=>'success',
+            'data'=>$info));
+    }
 	
 	/**
 	 * This is the action to handle external exceptions.
