@@ -28,7 +28,7 @@ class QueryFoodTruckCommand extends CConsoleCommand
 
         $num_mentions = count($mentions);
 
-        for ($i = 0; $i < $num_mentions; $i++)
+        for ($i = $num_mentions - 1; $i >= 0; $i--)
         {
             $mention = $mentions[$i];
 
