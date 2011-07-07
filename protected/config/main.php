@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 $settingsMain = array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Streetgrindz App!',
+	'name'=>'Streetgrindz',
 
 	// preloading 'log' component
 	'preload'=>array('log'),

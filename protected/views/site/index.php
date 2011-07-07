@@ -1,4 +1,4 @@
 <?php $this->layout="mapview"; ?>
-<?php $this->pageTitle=Yii::app()->name; ?>
+<?php $this->pageTitle="Find Your Grindz"; ?>
 <div id="map_canvas">
 </div>

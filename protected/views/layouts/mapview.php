@@ -10,10 +10,11 @@
 			</div><!-- content -->
 		</div>
 		<div data-role="footer" data-position="fixed" class="footer">
-			<h1>
-			&copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->params['siteName']); ?>.
+			<p style="text-align:center; font-size:.75em;">
+			&copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->params['siteName']); ?>
+            <br/>
 			Powered by: <a href="<?php echo CHtml::encode(Yii::app()->params['poweredByUrl']); ?>"><?php echo CHtml::encode(Yii::app()->params['poweredBy']); ?></a>
-			</h1>
+			</p>
 		</div>
 	</div>
 
