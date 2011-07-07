@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Twitter Accounts',
+	'Trucks',
 );
 
 $this->menu=array(
@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Twitter Accounts</h1>
+<h1>Trucks</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Twitter Accounts'=>array('index'),
+	'Trucks'=>array('index'),
 	'Create',
 );
 
@@ -10,7 +10,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Add Allowed Twitter Account</h1>
+<h1>Add Allowed Trucks</h1>
 
 <p>The added account will be permitted to send tweets from their truck location.<br />
 You must add either a Twitter Name, or their account ID.</p>

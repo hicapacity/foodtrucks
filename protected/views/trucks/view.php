@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Twitter Accounts'=>array('index'),
+	'Trucks'=>array('index'),
 	$model->id,
 );
 
@@ -19,9 +19,10 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'twitter_name',
 		'twitter_id',
-		'truck_info',		
+		'twitter_username',
+		'icon_url',		
+		'info',		
 		'created',
 		'modified',
 	),

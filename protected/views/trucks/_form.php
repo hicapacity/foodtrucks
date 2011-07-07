@@ -16,15 +16,21 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'twitter_name'); ?>
-		<?php echo $form->textField($model,'twitter_name',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'twitter_name'); ?>
+		<?php echo $form->labelEx($model,'twitter_username'); ?>
+		<?php echo $form->textField($model,'twitter_username',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->error($model,'twitter_username'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'truck_info'); ?>
-		<?php echo $form->textArea($model,'truck_info',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'truck_info'); ?>
+		<?php echo $form->labelEx($model,'icon_url'); ?>
+		<?php echo $form->textField($model,'icon_url',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'icon_url'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'info'); ?>
+		<?php echo $form->textArea($model,'info',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'info'); ?>
 	</div>
 
 	<?php if ($model->isNewRecord) { ?>

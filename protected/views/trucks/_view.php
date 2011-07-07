@@ -4,16 +4,20 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('twitter_name')); ?>:</b>
-	<?php echo CHtml::encode($data->twitter_name); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('twitter_id')); ?>:</b>
 	<?php echo CHtml::encode($data->twitter_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('truck_info')); ?>:</b>
-    <?php echo CHtml::encode($data->truck_info); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('twitter_username')); ?>:</b>
+	<?php echo CHtml::encode($data->twitter_username); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('icon_url')); ?>:</b>
+	<?php echo CHtml::encode($data->icon_url); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('info')); ?>:</b>
+    <?php echo CHtml::encode($data->info); ?>
     <br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>

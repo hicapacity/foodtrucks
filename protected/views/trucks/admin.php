@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Twitter Accounts'=>array('index'),
+	'Trucks'=>array('index'),
 	'Manage',
 );
 
@@ -15,7 +15,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('twitter-accounts-grid', {
+	$.fn.yiiGridView.update('trucks-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Twitter Accounts</h1>
+<h1>Manage Trucks</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -38,14 +38,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 </div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'twitter-accounts-grid',
+	'id'=>'trucks-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		//'id',
-		'twitter_name',
 		'twitter_id',
-		'truck_info',
+		'twitter_username',
+		'icon_url',
+		'info',
 		'created',
 		'modified',
 		array(

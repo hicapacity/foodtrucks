@@ -7,6 +7,8 @@
  * @property integer $id
  * @property string $twitter_id
  * @property string $twitter_username
+ * @property string $icon_url
+ * @property string $info
  * @property string $created
  * @property string $modified
  *
@@ -40,13 +42,13 @@ class Trucks extends CreatedModifiedActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('twitter_id, twitter_account_id, twitter_username, created, modified, icon_url', 'required'),
-			array('twitter_id, twitter_account_id', 'numerical', 'integerOnly'=>true),
+			array('twitter_id, twitter_username, info, created, modified, icon_url', 'required'),
+			array('twitter_id', 'numerical', 'integerOnly'=>true),
 			array('twitter_username', 'length', 'max'=>64),
 			array('icon_url', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, twitter_id, twitter_account_id, twitter_username, icon_url, created, modified', 'safe', 'on'=>'search'),
+			array('id, twitter_id, twitter_username, icon_url, info, created, modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +70,6 @@ class Trucks extends CreatedModifiedActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'twitterAccount' => array(self::BELONGS_TO, 'TwitterAccounts', 'twitter_account_id'),
 			'trucksTweets' => array(self::HAS_MANY, 'TrucksTweets', 'truck_id'),
 		);
 	}
@@ -80,10 +81,10 @@ class Trucks extends CreatedModifiedActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'twitter_id' => 'Twitter',
-			'twitter_account_id' => 'Twitter Account ID',
+			'twitter_id' => 'Twitter Id',
 			'twitter_username' => 'Twitter Username',
 			'icon_url'=> 'Icon URL',
+			'info'=> 'Truck Info',
 			'created' => 'Created',
 			'modified' => 'Modified',
 		);
@@ -102,7 +103,6 @@ class Trucks extends CreatedModifiedActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('twitter_id',$this->twitter_id,true);
-		$criteria->compare('twitter_account_id',$this->twitter_account_id,true);
 		$criteria->compare('twitter_username',$this->twitter_username,true);
 		$criteria->compare('icon_url',$this->icon_url,true);
 		$criteria->compare('created',$this->created,true);
@@ -113,48 +113,11 @@ class Trucks extends CreatedModifiedActiveRecord
 		));
 	}
 
-    # TODO: I don't like this, should raise exception, but just getting to work now.
-    public static function get_or_insert_truck($account, $mention)
-    {
-        if ($account and $mention)
-        {
-            $truck = Trucks::model()->findByAttributes(
-                array('twitter_id' => $mention->user->id_str));
-
-            return (NULL === $truck) ?
-                Trucks::model()->insert_truck_from_tweet($account, $mention) :
-                $truck;
-        }
-        return false;
-    }
-
-    # TODO: I don't like this either, should probably come from twitteraccounts, but just getting to work now.
-    protected static function insert_truck_from_tweet($account, $mention)
-    {
-        if ($account and $mention)
-        {
-            $truck = new Trucks;
-            $truck->twitter_id = $mention->user->id;
-            $truck->twitter_username = $mention->user->screen_name;
-            $truck->twitter_account_id = $account->id;
-            $truck->icon_url = $mention->user->profile_image_url;
-            if ($truck->validate()) 
-            {
-                if ($truck->save()) 
-                {
-                    return $truck;
-                }
-            } 
-        }
-        return false;
-    }
-
     /**
      * Get all trucks
 	 */
 	public static function get_all_trucks(){
-		$trucksObj = Trucks::model()->with('trucksTweets:coords',
-				'twitterAccount')->findAll();
+		$trucksObj = Trucks::model()->with('trucksTweets:coords')->findAll();
 
 		$ret = array();
 		foreach ($trucksObj as $truck){
@@ -176,8 +139,7 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_truck_by_id($id){
 		$id = (int)$id;
-		$truck = Trucks::model()->with('trucksTweets:coords',
-			'twitterAccount')->find(array(
+		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
 				'condition'=>'t.id=:id',
 				'params'=>array(':id'=>$id),
 			));
@@ -196,7 +158,7 @@ class Trucks extends CreatedModifiedActiveRecord
 		$ret = Array(
 			"id" => $truck->id,
 			"name" => $truck->twitter_username,
-			"info" => $truck->twitterAccount->truck_info,
+			"info" => $truck->info,
             "icon_url" => $truck->icon_url,
 		);
 		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){

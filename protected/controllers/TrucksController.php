@@ -44,44 +44,133 @@ class TrucksController extends Controller
 		);
 	}
 
-	public function actionAdmin()
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionView($id)
 	{
-		$this->render('admin');
+		$this->render('view',array(
+			'model'=>$this->loadModel($id),
+		));
 	}
 
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
 	public function actionCreate()
 	{
-		$this->render('create');
+		$model=new Trucks;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Trucks']))
+		{
+			$model->attributes=$_POST['Trucks'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
 	}
 
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Trucks']))
+		{
+			$model->attributes=$_POST['Trucks'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+
+	/**
+	 * Lists all models.
+	 */
 	public function actionIndex()
 	{
-		$this->render('index');
+		$dataProvider=new CActiveDataProvider('Trucks');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
 	}
 
-	public function actionUpdate()
+	/**
+	 * Manages all models.
+	 */
+	public function actionAdmin()
 	{
-		$this->render('update');
+		$model=new Trucks('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Trucks']))
+			$model->attributes=$_GET['Trucks'];
+
+		$this->render('admin',array(
+			'model'=>$model,
+		));
 	}
 
-	public function actionView()
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 */
+	public function loadModel($id)
 	{
-		$this->render('view');
+		$model=Trucks::model()->findByPk((int)$id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
 	}
 
-	// Uncomment the following methods and override them if needed
-	/*
-
-	public function actions()
+	/**
+	 * Performs the AJAX validation.
+	 * @param CModel the model to be validated
+	 */
+	protected function performAjaxValidation($model)
 	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
+		if(isset($_POST['ajax']) && $_POST['ajax']==='trucks-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
 	}
-	*/
 }

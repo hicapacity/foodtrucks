@@ -24,16 +24,14 @@ DROP TABLE IF EXISTS `trucks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trucks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `twitter_account_id` int(11) NOT NULL,
   `twitter_id` int(10) unsigned NOT NULL,
   `twitter_username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `icon_url` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `info` text COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `twitter_id` (`twitter_id`),
-  KEY `twitter_account_id` (`twitter_account_id`),
-  CONSTRAINT `trucks_ibfk_1` FOREIGN KEY (`twitter_account_id`) REFERENCES `twitter_accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  UNIQUE KEY `twitter_id` (`twitter_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,6 +41,7 @@ CREATE TABLE `trucks` (
 
 LOCK TABLES `trucks` WRITE;
 /*!40000 ALTER TABLE `trucks` DISABLE KEYS */;
+INSERT INTO `trucks` VALUES (1,31680416,'@bostonvaulter','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(2,92922989,'@808geek','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(3,20360943,'@streetgrindz','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(5,199785206,'@xtremetacos','','','2011-06-25 19:36:15','2011-06-25 19:36:15'),(6,219380743,'@FAIRYCAKES808','','','2011-06-25 19:36:49','2011-06-25 19:36:49'),(7,275837179,'@tikitruck','','','2011-06-25 19:37:27','2011-06-25 19:37:27'),(8,79702930,'@fliptouteats','','','2011-06-25 19:38:02','2011-06-25 19:38:02'),(9,228279591,'@camillesonwheel','','','2011-06-25 19:38:27','2011-06-25 19:38:27');
 /*!40000 ALTER TABLE `trucks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,34 +79,6 @@ CREATE TABLE `trucks_tweets` (
 LOCK TABLES `trucks_tweets` WRITE;
 /*!40000 ALTER TABLE `trucks_tweets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `trucks_tweets` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `twitter_accounts`
---
-
-DROP TABLE IF EXISTS `twitter_accounts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `twitter_accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `twitter_id` bigint(20) NOT NULL,
-  `twitter_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `truck_info` text COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `twitter_accounts`
---
-
-LOCK TABLES `twitter_accounts` WRITE;
-/*!40000 ALTER TABLE `twitter_accounts` DISABLE KEYS */;
-INSERT INTO `twitter_accounts` VALUES (1,31680416,'@bostonvaulter','Test Account','2011-06-25 19:36:15','2011-06-25 19:36:15'),(5,199785206,'@xtremetacos','Tacos','2011-06-25 19:36:15','2011-06-25 19:36:15'),(6,219380743,'@FAIRYCAKES808','Fairy Cakes','2011-06-25 19:36:49','2011-06-25 19:36:49'),(7,275837179,'@tikitruck','Tiki Truck!','2011-06-25 19:37:27','2011-06-25 19:37:27'),(8,79702930,'@fliptouteats','Filipino Eats!','2011-06-25 19:38:02','2011-06-25 19:38:02'),(9,228279591,'@camillesonwheel','Camille','2011-06-25 19:38:27','2011-06-25 19:38:27');
-/*!40000 ALTER TABLE `twitter_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

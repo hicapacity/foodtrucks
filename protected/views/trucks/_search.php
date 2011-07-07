@@ -11,18 +11,23 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'twitter_name'); ?>
-		<?php echo $form->textField($model,'twitter_name',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'twitter_id'); ?>
 		<?php echo $form->textField($model,'twitter_id',array('size'=>60,'maxlength'=>64)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'truck_info'); ?>
-		<?php echo $form->textArea($model,'truck_info',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->label($model,'twitter_username'); ?>
+		<?php echo $form->textField($model,'twitter_username',array('size'=>20,'maxlength'=>20)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'icon_url'); ?>
+		<?php echo $form->textField($model,'icon_url',array('size'=>20,'maxlength'=>256)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'info'); ?>
+		<?php echo $form->textArea($model,'info',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 
 	<div class="row">

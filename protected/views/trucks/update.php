@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Twitter Accounts'=>array('index'),
+	'Trucks'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update TwitterAccounts <?php echo $model->id; ?></h1>
+<h1>Update Trucks <?php echo $model->id; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -31,18 +31,14 @@ class QueryFoodTruckCommand extends CConsoleCommand
         for ($i = 0; $i < $num_mentions; $i++)
         {
             $mention = $mentions[$i];
-            $twitterAccount = TwitterHelper::getTwitterAccount($mention);
-            if (false !== $twitterAccount &&
-                TwitterHelper::isGeoLocatable($mention)) {
 
-                $truck = Trucks::model()->get_or_insert_truck(
-                    $twitterAccount, $mention);
+            $truck = Trucks::model()->findByAttributes(
+                array('twitter_id' => $mention->user->id_str)
+            );
 
-                if (!$truck)
-                {
-                    echo 'New Truck Twitter Count Insertion Failed: '.$mention->user->name."\n";
-                }
-                
+            if (NULL !== $truck && TwitterHelper::isGeoLocatable($mention)) 
+            {
+
                 if (TwitterHelper::isValidFormat($mention))
                 {
                     Yii::log("Tweet is valid. Checking for db insertion", 'info', get_called_class());
@@ -81,7 +77,9 @@ class QueryFoodTruckCommand extends CConsoleCommand
                     Yii::log($message, 'info', get_called_class());
                     echo $message;
                 }
-            } else {
+            } 
+            else 
+            {
                 echo 'Bad Tweeter: '.$mention->user->screen_name.' '.$mention->text."\n";                
             }
         }
