@@ -24,7 +24,8 @@ class Truck
             src: @data.icon_url,     
         }
 		$ret = $ '<div>'
-		$ret.html '<h2>' + @data.name + '</h2><p>' + @data.info + '</p>'
+		
+		$ret.html '<h3><img src="' + @data.icon_url + '"/>&nbsp;&nbsp;<a href="http://twitter.com/' + @data.name + '">' + @data.name + '</a></h3><p>' + @data.info + '</p>'
 		$container = $ '<div>'
 		$container.css {width: '100%'}
 		$prev = $ '<a>', {
@@ -38,7 +39,7 @@ class Truck
 			html: 'Next&raquo',
 		}
 		$more_info = $ '<a>', {
-			href: '/truck/id/' + @data.id,
+			href: @data.menu_url,
 			title: 'Info',
 			html: 'Info',
 		}
@@ -57,7 +58,7 @@ class Truck
 		$next.click (e) =>
 			@app.open_truck @id+1
 			false
-		$container.append $prev, $more_info, $next, $icon
+		$container.append $prev, $more_info, $next
 		$ret.append $container
 		$ret[0]
 
