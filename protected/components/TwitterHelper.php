@@ -35,8 +35,12 @@ class TwitterHelper
     }
 
     public static function parseTruckTweet($tweet_text) {
-        preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*?)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches);
-        return $matches;
+        if (preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*?)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches)) {
+            return $matches;
+        } else {
+            preg_match('/^@streetgrindzapp\s+(?P<start>\d+)-(?P<end>\d+)\s*(?P<menu_url>http:\/\/.*?)?\s*$/', $tweet_text, $matches);
+            return $matches;
+        } 
     }
 
     /** 
