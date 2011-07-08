@@ -45,11 +45,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		//'id',
 		'twitter_id',
 		'twitter_username',
-		'icon_url',
+		array(
+            'name' => 'icon_url',
+            'value'=> 'print("<img src=\"$data->icon_url\"/>")'
+		),
         'name',
 		'info',
-		'created',
-		'modified',
 		array(
 			'class'=>'CButtonColumn',
 		),
