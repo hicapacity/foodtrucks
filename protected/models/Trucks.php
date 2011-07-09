@@ -56,10 +56,10 @@ class Trucks extends CreatedModifiedActiveRecord
     // TODO: Insert link to default truck image
     public function beforeValidate() 
     {
-	  if (!isset($this->icon_url)) {
-		$this->icon_url = 'http://google.com/insert_here';
-	  }
-	  return parent::beforeValidate();
+        if (!isset($this->icon_url)) {
+            $this->icon_url = 'http://google.com/insert_here';
+        }
+        return parent::beforeValidate();
     }
 
 	
@@ -122,7 +122,7 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_trucks(){
 		$trucksObj = Trucks::model()->with(array(
-	     'trucksTweets:coords'=>array('order'=>'trucksTweets.id DESC')))->findAll();
+           'trucksTweets:coords'=>array('order'=>'trucksTweets.id DESC')))->findAll();
 
 		$ret = array();
 		foreach ($trucksObj as $truck){
@@ -136,9 +136,7 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_located_trucks(){
 		$trucks = Trucks::get_all_trucks();
-		$ret = array_filter($trucks, array('Trucks', 'has_geo'));
-		// because M**F** PHP doesn't have a decent list type
-		return array_values($ret);
+		return array_filter($trucks, array('Trucks', 'has_geo'));
 	}
 
 	/**
@@ -146,9 +144,7 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_open_and_located_trucks(){
 		$trucks = Trucks::get_all_located_trucks();
-		$ret = array_filter($trucks, array('Trucks', 'is_open'));
-		// because M**F** PHP doesn't have a decent list type
-		return array_values($ret);
+		return array_filter($trucks, array('Trucks', 'is_open'));
 	}
 
 	/**
@@ -157,9 +153,9 @@ class Trucks extends CreatedModifiedActiveRecord
 	public static function get_truck_by_id($id){
 		$id = (int)$id;
 		$truck = Trucks::model()->with('trucksTweets:coords')->find(array(
-			'condition'=>'t.id=:id',
-			'params'=>array(':id'=>$id),
-		));
+				'condition'=>'t.id=:id',
+				'params'=>array(':id'=>$id),
+			));
 		$ret = array();
 		if ($truck !== NULL){
 			$ret[] = Trucks::obj_to_array($truck);
@@ -172,15 +168,15 @@ class Trucks extends CreatedModifiedActiveRecord
 	}
 
 	public static function is_open($truck){
-	  $utc = new DateTimeZone('UTC');
-	  $tweet_starttime = DateTime::createFromFormat('Y-m-d G:i:s', 
-		$truck['start'], $utc);
+        $utc = new DateTimeZone('UTC');
+        $tweet_starttime = DateTime::createFromFormat('Y-m-d G:i:s', 
+            $truck['start'], $utc);
 
-	  $tweet_endtime = DateTime::createFromFormat('Y-m-d G:i:s', 
-		$truck['end'], $utc);
+        $tweet_endtime = DateTime::createFromFormat('Y-m-d G:i:s', 
+            $truck['end'], $utc);
 
-	  $now = time();
-	  return ($now >= $tweet_starttime->getTimestamp()) && ($tweet_endtime->getTimestamp() >= $now);
+        $now = time();
+        return ($now >= $tweet_starttime->getTimestamp()) && ($tweet_endtime->getTimestamp() >= $now);
 	}
 
 	public static function obj_to_array($truck){
@@ -189,18 +185,18 @@ class Trucks extends CreatedModifiedActiveRecord
 			"twitter_username" => $truck->twitter_username,
 			"name" => $truck->name,
 			"info" => $truck->info,
-			"icon_url" => $truck->icon_url,
+            "icon_url" => $truck->icon_url,
 		);
 
-	  // This is only grabbing the last Truck tweet
+        // This is only grabbing the last Truck tweet
 		if (is_array($truck->trucksTweets) && count($truck->trucksTweets)){
 			$tweet = $truck->trucksTweets[0];
 
-			$ret['lat']     = $tweet->geo_lat;
-			$ret['lng']     = $tweet->geo_long;
-			$ret['start']   = $tweet->start_time;
-			$ret['end']     = $tweet->end_time;
-			$ret['menu_url'] = $tweet->menu_url;
+            $ret['lat']     = $tweet->geo_lat;
+            $ret['lng']     = $tweet->geo_long;
+            $ret['start']   = $tweet->start_time;
+            $ret['end']     = $tweet->end_time;
+            $ret['menu_url'] = $tweet->menu_url;
 		}
 		return $ret;
 	}

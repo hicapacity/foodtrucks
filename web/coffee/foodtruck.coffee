@@ -4,16 +4,13 @@ class Main
 		@opts =
 			default_latlng: new google.maps.LatLng(21.466, -157.9833)
 			gmap_dom_id: "#map_canvas"
-			menu_dom_id: "#mainmenu"
 
-		@menu = null
 		@gmap = null
 		@trucks = []
 		@user_marker = null
 		@geo_cb = null
 		@info_window = null
 
-		@menu = new foodtruckapp.Menu @opts['menu_dom_id'], @
 		$map_canvas = $(@opts['gmap_dom_id'])
 		if $map_canvas
 			@init_map $map_canvas[0]
