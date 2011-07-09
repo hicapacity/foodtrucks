@@ -23,6 +23,7 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/')),
 				array('label'=>'Manage Trucks', 'url'=>array('/trucks/admin'),'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Manage Tweets', 'url'=>array('/truckstweets/admin'),'visible'=>!Yii::app()->user->isGuest),
                 array(
                     'label' => 'Login',
                     'url' => array('/site/login'),
