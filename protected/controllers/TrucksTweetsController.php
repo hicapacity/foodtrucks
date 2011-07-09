@@ -1,6 +1,6 @@
 <?php
 
-class TrucksController extends Controller
+class TrucksTweetsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -30,10 +30,6 @@ class TrucksController extends Controller
 				'actions'=>array('index','view'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
 			array('allow', // allow authenticated user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
@@ -52,53 +48,6 @@ class TrucksController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Trucks;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Trucks']))
-		{
-			$model->attributes=$_POST['Trucks'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Trucks']))
-		{
-			$model->attributes=$_POST['Trucks'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
 		));
 	}
 
@@ -127,7 +76,7 @@ class TrucksController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Trucks');
+		$dataProvider=new CActiveDataProvider('TrucksTweets');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -138,10 +87,10 @@ class TrucksController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Trucks('search');
+		$model=new TrucksTweets('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Trucks']))
-			$model->attributes=$_GET['Trucks'];
+		if(isset($_GET['TrucksTweets']))
+			$model->attributes=$_GET['TrucksTweets'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -155,7 +104,7 @@ class TrucksController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Trucks::model()->findByPk((int)$id);
+		$model=TrucksTweets::model()->findByPk((int)$id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
