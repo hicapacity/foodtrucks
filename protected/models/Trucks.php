@@ -146,7 +146,7 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_open_and_located_trucks(){
 		$trucks = Trucks::get_all_located_trucks();
-		$ret = array_filter($trucks, array('Trucks', 'is_open_and_located'));
+		$ret = array_filter($trucks, array('Trucks', 'is_open'));
 		// because M**F** PHP doesn't have a decent list type
 		return array_values($ret);
 	}
@@ -181,10 +181,6 @@ class Trucks extends CreatedModifiedActiveRecord
 
 	  $now = time();
 	  return ($now >= $tweet_starttime->getTimestamp()) && ($tweet_endtime->getTimestamp() >= $now);
-	}
-
-	public static function is_open_and_located($truck){
-		return Trucks::is_open($truck) && Trucks::has_geo($truck);
 	}
 
 	public static function obj_to_array($truck){
