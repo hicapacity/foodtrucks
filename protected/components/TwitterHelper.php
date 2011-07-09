@@ -60,6 +60,10 @@ class TwitterHelper
      */
     public static function convertTruckTime($tweet_time, $hour, $minutes=0, $seconds=0, $timezone='Pacific/Honolulu')
     {
+	# parseTruckTweet returns string values
+	$hour = (int)$hour;
+	$minutes = (int)$minutes;
+	$seconds = (int)$seconds;
         $utc = new DateTimeZone('UTC');
         $tweet_datetime = DateTime::createFromFormat('D M j G:i:s +0000 Y', $tweet_time, $utc);
         $hst = new DateTimeZone($timezone);
