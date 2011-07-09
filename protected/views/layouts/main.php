@@ -17,7 +17,6 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 
 	<script type="text/coffeescript" src="<?php echo Yii::app()->request->baseUrl; ?>/coffee/api.coffee"></script>
-	<script type="text/coffeescript" src="<?php echo Yii::app()->request->baseUrl; ?>/coffee/menu.coffee"></script>
 	<script type="text/coffeescript" src="<?php echo Yii::app()->request->baseUrl; ?>/coffee/truck.coffee"></script>
 	<script type="text/coffeescript" src="<?php echo Yii::app()->request->baseUrl; ?>/coffee/foodtruck.coffee"></script>
 	<script type="text/javascript" src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
