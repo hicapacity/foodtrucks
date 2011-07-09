@@ -1,3 +1,11 @@
+`function mysqlTimeStampToDate(timestamp) {
+    //function parses mysql datetime string and returns javascript Date object
+    //input has to be in this format: 2007-06-05 15:26:02
+    var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+    var parts=timestamp.replace(regex,"$1 $2 $3 $4 $5 $6").split(' ');
+    return new Date(Date.UTC(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]));
+  }
+`
 class Truck
 	constructor: (@id, @data, @app) ->
 		@marker = null
@@ -20,45 +28,51 @@ class Truck
 		@app.info_window.open @app.gmap, @marker
 
 	info_content: () ->
+		@offset = 10
+		@truck_open = mysqlTimeStampToDate @data.start
+		@truck_close = mysqlTimeStampToDate @data.end
+
+		if @truck_open.getHours() > 12
+			@truck_open.setHours(@truck_open.getHours() - 12)
+			@truck_open_ampm = "PM"
+		else
+			@truck_open_ampm = "AM"
+
+		if @truck_close.getHours() > 12
+                        @truck_close.setHours(@truck_close.getHours() - 12)
+                        @truck_close_ampm = "PM"
+                else
+                        @truck_close_ampm = "AM"
+
+		if @truck_open.getMinutes() == 0
+			@truck_open_mins = "00"
+		else
+			@truck_open_mins = @truck_open.getMinutes()
+		
+		if @truck_close.getMinutes() == 0
+                        @truck_close_mins = "00"
+                else
+                        @truck_close_mins = @truck_close.getMinutes()
+                
+
+		@truck_open_time = @truck_open.getHours() + ":" + @truck_open_mins + " " + @truck_open_ampm
+		@truck_close_time = @truck_close.getHours() + ":" + @truck_close_mins + " " + @truck_close_ampm
 		$icon = $ '<img>', {
             src: @data.icon_url,     
         }
 		$ret = $ '<div>'
-		
-		$ret.html '<h3><img src="' + @data.icon_url + '"/>&nbsp;&nbsp;<a href="http://twitter.com/' + @data.name + '">' + @data.name + '</a></h3><p>' + @data.info + '</p>'
+		$ret.html '<img style="float: left; margin: 0px 10px 0 0px;" src="' + @data.icon_url + '"/>' + @data.name + '<br/><a href="http://twitter.com/' + @data.twitter_username + '">' + @data.twitter_username + '</a><p>Open: ' + @truck_open_time + ' - ' + @truck_close_time + '</p><p>' + @data.info + '</p>'
 		$container = $ '<div>'
 		$container.css {width: '100%'}
-		$prev = $ '<a>', {
-			href: '#prev',
-			title: 'Prev',
-			html: '&laquo;Prev',
-		}
-		$next = $ '<a>', {
-			href: '#next',
-			title: 'Next',
-			html: 'Next&raquo',
-		}
 		$more_info = $ '<a>', {
 			href: @data.menu_url,
-			title: 'Info',
-			html: 'Info',
-		}
-		$().add($prev).add($next).add($more_info).css {
-			display: 'block',
-			width: '33%',
-			float: 'left',
-			textAlign: 'center',
+			title: 'Menu',
+			html: 'Menu',
 		}
 		$more_info.click (e) =>
 			@app.open_truck_info @id-1
 			false
-		$prev.click (e) =>
-			@app.open_truck @id-1
-			false
-		$next.click (e) =>
-			@app.open_truck @id+1
-			false
-		$container.append $prev, $more_info, $next
+		$container.append $more_info
 		$ret.append $container
 		$ret[0]
 
