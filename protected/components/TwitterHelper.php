@@ -35,26 +35,14 @@ class TwitterHelper
     }
 
     public static function parseTruckTweet($tweet_text) {
-        if (preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*?)?\s*(?P<start>[012]?[0-9]:?([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?( ?to ?| ?2 ?| ?.- ?)(?P<end>[012]?[0-9]:?([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?\s*$/', $tweet_text, $matches)) {
+        if (preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*?)?\s*(?P<start>\d+)-(?P<end>\d+)\s*$/', $tweet_text, $matches)) {
             return $matches;
         } else {
-            preg_match('/^@streetgrindzapp\s+(?P<start>[012]?[0-9]:?([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?( ?to ?| ?2 ?| ?.- ?)(?P<end>[012]?[0-9]:?([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?\s*(?P<menu_url>http:\/\/.*?)?\s*$/', $tweet_text, $matches);
-            return $matches;
-        } 
-    }
-/**
- * Use the following function if you'd like to use minutes in the future.
- * extra matches include <startmins> and <endmins>
-    public static function parseTruckTweet($tweet_text) {
-        if (preg_match('/^@streetgrindzapp\s+(?P<menu_url>http:\/\/.*?)?\s*(?P<start>[012]?[0-9]):?(?P<startmins>([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?( ?to ?| ?2 ?| ?.- ?)(?P<end>[012]?[0-9]):?(?P<endmins>([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?\s*$/', $tweet_text, $matches)) {
-            return $matches;
-        } else {
-            preg_match('/^@streetgrindzapp\s+(?P<start>[012]?[0-9]):?(?P<startmins>([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?( ?to ?| ?2 ?| ?.- ?)(?P<end>[012]?[0-9]):?(?P<endmins>([0-5][0-9])?)( ?a| ?A)?( ?p| ?P)?m?\s*(?P<menu_url>http:\/\/.*?)?\s*$/', $tweet_text, $matches);
+            preg_match('/^@streetgrindzapp\s+(?P<start>\d+)-(?P<end>\d+)\s*(?P<menu_url>http:\/\/.*?)?\s*$/', $tweet_text, $matches);
             return $matches;
         } 
     }
 
-*/
     /** 
      * Take tweet time -> converts tweet to timezone, sets the hour/min/secs, converts back to UTC for db
      */
