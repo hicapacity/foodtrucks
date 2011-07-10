@@ -83,6 +83,7 @@ class Main
 	mark_trucks: (trucks) ->
 		console.log "Marking Trucks"
 		console.log trucks
+		$('#trucks_open_count').html(trucks.length)
 		google.maps.event.clearListeners @gmap, 'click'
 		_ = (v.clear() for v in @trucks)	
 		@trucks = (new foodtruckapp.Truck(i, v, @) for v, i in trucks)

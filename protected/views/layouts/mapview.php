@@ -1,7 +1,10 @@
 <?php $this->beginContent('//layouts/main'); ?>
 	<div data-fullscreen="true" data-role="page" data-theme="b" class="content_wrapper">
 		<div data-role="header" data-position="fixed">
-			<h1><img src="images/StreetgrindzLogo.png"><a style="color: #fff; text-decoration: none;" href="http://streetgrindz.com"><?php echo CHtml::encode(Yii::app()->name); ?></a></h1>
+			<h1><img src="images/StreetgrindzLogo.png"><a style="color: #FFF7BA;" href="http://streetgrindz.com"><?php echo CHtml::encode(Yii::app()->name); ?></a><br/>
+		<span style="font-size: 12px">
+			<span id="trucks_open_count">0</span> Trucks</h1>
+		</span>
 		</div>
 		<div data-role="content" class="content">
 			<div id="content_map">
@@ -12,7 +15,7 @@
 			<p style="text-align:center; font-size:.75em;">
 			&copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->params['siteName']); ?>
             <br/>
-			Powered by: <a href="<?php echo CHtml::encode(Yii::app()->params['poweredByUrl']); ?>"><?php echo CHtml::encode(Yii::app()->params['poweredBy']); ?></a>
+			Powered by: <a style="color: #FFF7BA;" href="<?php echo CHtml::encode(Yii::app()->params['poweredByUrl']); ?>"><?php echo CHtml::encode(Yii::app()->params['poweredBy']); ?></a>
 			</p>
 		</div>
 	</div>

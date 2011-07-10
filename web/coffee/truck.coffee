@@ -26,6 +26,7 @@ class Truck
 	on_click: () =>
 		@app.info_window.setContent @info_content()
 		@app.info_window.open @app.gmap, @marker
+		@app.gmap.panTo @marker.getPosition()
 
 	info_content: () ->
 		@offset = 10
