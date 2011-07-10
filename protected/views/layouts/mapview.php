@@ -1,7 +1,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 	<div data-fullscreen="true" data-role="page" data-theme="b" class="content_wrapper">
 		<div data-role="header" data-position="fixed">
-			<h1><img src="images/StreetgrindzLogo.png"> <?php echo CHtml::encode(Yii::app()->name); ?></h1>
+			<h1><img src="images/StreetgrindzLogo.png"><a style="color: #fff; text-decoration: none;" href="http://streetgrindz.com"><?php echo CHtml::encode(Yii::app()->name); ?></a></h1>
 		</div>
 		<div data-role="content" class="content">
 			<div id="content_map">
