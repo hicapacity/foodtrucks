@@ -136,7 +136,8 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_located_trucks(){
 		$trucks = Trucks::get_all_trucks();
-		return array_filter($trucks, array('Trucks', 'has_geo'));
+		$ret = array_filter($trucks, array('Trucks', 'has_geo'));
+		return array_values($ret);
 	}
 
 	/**
@@ -144,7 +145,8 @@ class Trucks extends CreatedModifiedActiveRecord
 	 */
 	public static function get_all_open_and_located_trucks(){
 		$trucks = Trucks::get_all_located_trucks();
-		return array_filter($trucks, array('Trucks', 'is_open'));
+		$ret = array_filter($trucks, array('Trucks', 'is_open'));
+		return array_values($ret);
 	}
 
 	/**
