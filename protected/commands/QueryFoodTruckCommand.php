@@ -79,7 +79,8 @@ class QueryFoodTruckCommand extends CConsoleCommand
                     {
                         $message = 'SKIPPED: Tweet (id=' . $mention->id_str . ") already exists.\n";
                         Yii::log($message, 'info', get_called_class());
-                        echo $message;
+                        // Eating this output to save on cron tasks
+                        // echo $message;
                         continue;
                     }
                 }
