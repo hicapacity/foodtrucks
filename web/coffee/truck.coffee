@@ -62,18 +62,60 @@ class Truck
             src: @data.icon_url,     
         }
 		$ret = $ '<div>'
-		$ret.html '<img style="float: left; margin: 0px 10px 0 0px;" width="48" height="48" src="' + @data.icon_url + '"/>' + @data.name + '<br/><a href="http://twitter.com/' + @data.twitter_username + '">' + @data.twitter_username + '</a><p>Hours: ' + @truck_open_time + ' - ' + @truck_close_time + '</p><p>' + @data.info + '</p>'
+
+		#$ret.html '<img style="float: left; margin: 0px 10px 0 0px;" width="48" height="48" src="' + @data.icon_url + '"/>' + @data.name + '<br/><a href="http://twitter.com/' + @data.twitter_username + '">' + @data.twitter_username + '</a><p>Hours: ' + @truck_open_time + ' - ' + @truck_close_time + '</p><p id="data_info">' + data_info + '</p>'
+		$truck_picture = $ '<img>', {
+			width: 48,
+			height: 48,
+			src: @data.icon_url
+		}
+		$truck_picture.css {
+			float: 'left',
+			margin: '0px 10px 0 0px'
+		}
+
+		$ret.append $truck_picture
+		$truck_meta = @data.name + '<br/><a href="http://twitter.com/' + @data.twitter_username + '">' + @data.twitter_username + '</a><p>Hours: ' + @truck_open_time + ' - ' + @truck_close_time + '</p>'
+		$ret.append $truck_meta
+		
+		$data_info_split = @data.info.trim().split(' ')
+
+		if ($data_info_split.length > 15)
+			$data_info = @data.info.trim().split(' ').slice(0, 15).join(' ')
+		else 
+			$data_info = @data.info
+
+		$truck_info = $ '<p>', {
+			html: $data_info
+		}
+
+		$info_more = $ '<a>', {
+			href: '#',
+			title: 'More',
+			html: 'More'	
+		}
+		$info_more.click (e) => 
+			$truck_info.text @data.info
+			google.maps.event.trigger(@app.info_window, 'content_changed');
+			false
+
+		if ($data_info_split.length > 15)
+			$truck_info.append('...<br/>')
+			$truck_info.append $info_more
+
+		$ret.append $truck_info
+
 		$container = $ '<div>'
 		$container.css {width: '100%'}
-		$more_info = $ '<a>', {
+		$menu_link = $ '<a>', {
 			href: @data.menu_url,
 			title: 'Menu',
-			html: 'Menu',
+			html: 'Menu'
 		}
-		$more_info.click (e) =>
+		$menu_link.click (e) =>
 			@app.open_truck_info @id-1
 			false
-		$container.append $more_info
+		$container.append $menu_link
 		$ret.append $container
 		$ret[0]
 
