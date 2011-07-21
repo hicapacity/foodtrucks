@@ -3,8 +3,9 @@
 		<div data-role="header" data-position="fixed">
 			<h1><img src="images/StreetgrindzLogo.png"><a style="color: #FFF7BA;" href="http://streetgrindz.com"><?php echo CHtml::encode(Yii::app()->name); ?></a><br/>
 		<span style="font-size: 12px">
-			<span id="trucks_open_count">0</span> Trucks</h1>
+			<span id="trucks_open_count">0</span> Trucks
 		</span>
+		</h1>
 		</div>
 		<div data-role="content" class="content">
 			<div id="content_map">
